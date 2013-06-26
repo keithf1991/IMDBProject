@@ -17,6 +17,53 @@ public class main {
 		
 		return name;
 	}
+	
+	public static String convert_date(String date){
+		
+		String day = "";
+		String month = "";
+		String year = "";
+		
+		year = date.substring(date.length()-4, date.length());
+		
+		if(date.contains("January")){
+			month = "01";
+		}else if(date.contains("February")){
+			month = "02";
+		}else if(date.contains("March")){
+			month = "03";
+		}else if(date.contains("April")){
+			month = "04";
+		}else if(date.contains("May")){
+			month = "05";
+		}else if(date.contains("June")){
+			month = "06";
+		}else if(date.contains("July")){
+			month = "07";
+		}else if(date.contains("August")){
+			month = "08";
+		}else if(date.contains("September")){
+			month = "09";
+		}else if(date.contains("October")){
+			month = "10";
+		}else if(date.contains("November")){
+			month = "11";
+		}else if(date.contains("December")){
+			month = "12";
+		}
+		
+		day = date.substring(0, date.indexOf(" "));
+		if(day.length() == 1){
+			day = "0" + day;
+		}else if(day.length() > 2){
+			return month + "/" + year;
+		}
+		
+		
+		
+		return month + "/" + day + "/" + year;
+		
+	}
 
 	/*
 	 * return id, name, gender of people associated with movie_id
@@ -125,12 +172,19 @@ public class main {
 		String query = "select MI.info from movie_info as MI where MI.movie_id = '" + movie_id + "' and MI.info_type_id = 98;";
 		ResultSet rs = fromServer.executeQuery(query);
 				
-	    while(rs.next()){
+	    //while(rs.next()){
+		if(rs.next()){
 	    	String i = rs.getString("info");
 	    	//System.out.println(i);
 	    	
-	    	plot = plot + i + "/";
-	    }		
+	    	plot = i;
+	    }
+		
+		/*if(rs.next()){
+			String i = rs.getString("info");
+			
+			plot = i;
+		}*/
 	
 		return plot;	
 	}
@@ -140,7 +194,7 @@ public class main {
 		String query = "select info from movie_info where info_type_id = 1 and movie_id = " + movie_id + ";";
 		
 		ResultSet rs = fromServer.executeQuery(query);
-		System.out.println("got runtime query");	
+		//System.out.println("got runtime query");	
 
 	    if(rs.next()){
 	    	runtime = rs.getString("info");
@@ -161,7 +215,7 @@ public class main {
 	    }
 	    
 	    if(rating == ""){
-	    	return "NR";
+	    	return "N/A";
 	    }
 	    
 	    //System.out.println("rating before extraction: " + rating);
@@ -171,6 +225,35 @@ public class main {
 		//System.out.println("length of rating is " + rating.length());
 		return rating;
 	}
+	
+
+	public static String getMovieUSAReleaseDate(Statement fromServer, String movie_id) throws SQLException{
+		String release_date = "";
+		String query = "select info from movie_info where info_type_id = 16 and movie_id = " + movie_id + " and info like '%USA%' and note is null;";
+		
+		ResultSet rs = fromServer.executeQuery(query);
+				
+	    if(rs.next()){
+	    	release_date = rs.getString("info");
+	    }
+	    System.out.println("release_date before extraction: " + release_date);
+	    if(release_date == ""){
+	    	return "N/A";
+	    }
+	    
+	    //grabs the rating from a string
+	    release_date = release_date.substring(release_date.indexOf(":")+1, release_date.length());
+	    if(release_date.length() > 4){
+		    System.out.println("pre-converted date: " + release_date);
+		    release_date = convert_date(release_date);
+			System.out.println("converted date to: " + release_date);
+	    }
+	    
+		return release_date;
+	}
+	
+	
+	
 	/*
 	 * inserts movie and person data
 	 */
@@ -186,7 +269,7 @@ public class main {
 	    //while(movie.next()){
 	    if(true){
 	    	ii++;
-	    	System.out.println("loop #" + ii);
+	    	//System.out.println("loop #" + ii);
 	    	
 	    	String id = movie.getString("id");
 	        String title = movie.getString("title");
@@ -219,7 +302,8 @@ public class main {
 	        
 	        
 	        //update plot
-	       /* String plot = getMoviePlot(fromServer, id);
+	        String plot = getMoviePlot(fromServer, id);
+	        
 	        query = "update movie set plot = '" + plot + "' where mid = '" + movie_id + "';";
 	        try{
 	        	toServer.executeUpdate(query);
@@ -227,7 +311,7 @@ public class main {
 	        }
 	        catch(SQLException d){
 	        	System.out.println("couldn't update movie " + title + " with plot:" + plot);
-	        }*/
+	        }
 	        
 	        //update runtime
 	        
@@ -251,8 +335,20 @@ public class main {
 	        }
 	        catch(SQLException d){
 	        	System.out.println("couldn't update movie " + title + "with rating " + mpaa);
-	        }		        
-	        	        		
+	        }	
+	        
+	        
+	        //update release day
+	        String release_day = getMovieUSAReleaseDate(fromServer, movie_id);
+	        //System.out.println("release day for title is " + release_day);
+	        query = "update movie set release_date = '" + release_day + "' where mid = '" + movie_id + "';";
+	        try{
+	        	toServer.executeUpdate(query);
+		        System.out.println("updated movie " + title + " with release_day " + release_day);
+	        }
+	        catch(SQLException d){
+	        	System.out.println("couldn't update movie " + title + "with release_day " + release_day);
+	        }		        	        		
 	    }
 	    
 	    
@@ -385,16 +481,106 @@ public class main {
 
 		return  fromServer.executeQuery(query);		
 	}
+	
+	
+	public static ResultSet getOpeningWeekendGrossData(Statement fromServer, String movie_id) throws SQLException {
+		String query = "select id,info from movie_info where info_type_id = 108 and info like '%USA%' and movie_id = " + movie_id + ";";	
+		return  fromServer.executeQuery(query);		
+	}
+	
+	public static ResultSet getWorldTotalGross(Statement fromServer, String movie_id) throws SQLException {
+		
+		//get worldwide total gross
+		String query = "select id,info from movie_info where info_type_id = 107 and info like '%Worldwide%' and movie_id = " + movie_id+";";
+		
+		return  fromServer.executeQuery(query);		
+	}
+	
+	public static ResultSet getUSATotalGross(Statement fromServer, String movie_id) throws SQLException {
+		
+		//get worldwide total gross
+		String query = "select id,info from movie_info where info_type_id = 107 and info like '%USA%' and movie_id = " + movie_id+";";
+		
+		return  fromServer.executeQuery(query);		
+	}
+	
 
 	public static void insertBoxOfficeData(Statement fromServer, Statement toServer, String movie_id){
-		ResultSet box_office;
-		
+		ResultSet weekendGrossData;
+		ResultSet totalGross;
 		try{
-			box_office = getBoxOfficeData(fromSErver, movie_id);
+			//get opening weekend data
+			weekendGrossData = getOpeningWeekendGrossData(fromServer, movie_id);
+			System.out.println("got weekend gross for " + movie_id);
+
+	
+			weekendGrossData.first();
+	    	String id = weekendGrossData.getString("id");
+	    	String weekendGrossString = weekendGrossData.getString("info");
+
+	    	
+	    	weekendGrossString = weekendGrossString.substring(weekendGrossString.indexOf("$"), weekendGrossString.indexOf(" ") -1 );
+	    	System.out.println("movie with id " + movie_id + " made " + weekendGrossString + " on opening weekend");
+	    	//gets worldwide total
+			totalGross = getWorldTotalGross(fromServer, movie_id);
+			System.out.println("got total gross");
+			
+			boolean empty = true;
+			while(totalGross.next()){
+				empty = false;
+			}
+			if(empty){
+				totalGross = getUSATotalGross(fromServer, movie_id);
+			}
+			totalGross.first();
+			
+			/*if(totalGross.last()){
+				int rowCount = totalGross.getRow();
+				System.out.println("total rowCount = " + rowCount);
+				if(rowCount == 0){
+					System.out.println("getting USA gross");
+					totalGross = getUSATotalGross(fromServer, movie_id);
+				}
+			}*/
+
+			System.out.println("extraction of total gross info");
+			totalGross.first();
+	        String id2 = totalGross.getString("id");
+	        String totalGrossinfo = totalGross.getString("info");
+	        
+	        totalGrossinfo = totalGrossinfo.substring(totalGrossinfo.indexOf("$"), totalGrossinfo.indexOf(" ") -1 );
+	        
+	        System.out.println("movie with id " + movie_id + " made " + totalGrossinfo + " in total");
+	        
+	        //insert box office data
+	        String query = "insert into box_office (id, opening_weekend_gross, total_gross) values ('" + id + "','" + weekendGrossString + "','" + totalGrossinfo + "');";
+	        try{
+	        	toServer.executeUpdate(query);
+		        System.out.println("inserted " + id + " into box_office");
+	        }catch(SQLException e){
+	        	System.out.println("box office: " + id + " already exists in box_office")	;        	
+		        }
+ 
+		 /*   query = "update box_office set total_gross = " + totalGrossinfo + " where id = " + id;
+	        try{
+	        	toServer.executeUpdate(query);
+		        System.out.println("updated " + id + " with total gross");
+	        }catch(SQLException e){
+	        	System.out.println("could not update box office: " + id + " with total gross info")	;	
+	        }*/
+	        
+	        //insert into opened
+	        query = "insert into opened(mid, bid) values ('" + movie_id + "','" + id + "');";
+	        try{
+	        	toServer.executeUpdate(query);
+		        System.out.println("inserted " + id + " into opened");
+	        }catch(SQLException e){
+	        	System.out.println("box office: " + id + " already exists in box_office")	;	
+	        }
 
 			
 		} catch(SQLException e)	{
-			
+			e.printStackTrace();
 		}
 		
 	}
@@ -416,13 +602,27 @@ public class main {
 
 
 					String query = "insert into production_companies(id, name, location) values ('"  + id + "','" + company_name + "','" + country_code  + "');" ;
-					toServer.executeUpdate(query);
+					//toServer.executeUpdate(query);
 					System.out.println("inserted " + company_name + " into production_companies");
+					
+					try{
+						query = "insert into produced(mid, company_id) values ('"  + movie_id + "','" + id + "');" ;
+						toServer.executeUpdate(query);
+					}catch(SQLException e){
+						System.out.println("error inserting into produced for " + movie_id + " and " + company_name);
+					}
+					
+					
+					
 				}
+				
+				
 
 			}catch(SQLException e){
 				System.out.println("company: " + company_name + " already exists in production_companies");
 			}
+			
+			//insert into produced table
 		
 
 	}			
@@ -448,7 +648,9 @@ public class main {
 
 		    conFrom = DriverManager.getConnection(local_url, "paul", "imdb");
 			System.out.println("get connection");
-		    fromServer = conFrom.createStatement();
+		    fromServer = conFrom.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    	    ResultSet.CONCUR_READ_ONLY);
+		     
 		    System.out.println("connected to blackbird");
 
 			
@@ -486,9 +688,11 @@ public class main {
 					while(listy.hasMoreElements()){
 						//System.out.println("Inserting movie id: " + listy.nextElement());
 						String movieString = listy.nextElement();
-						insertPeopleandMovieData(fromServer, toServer, movieString);
-						//insertBoxOfficeData(fromServer, toServer, movieString);
-						insertCompanyData(fromServer, toServer, movieString);
+						//insertPeopleandMovieData(fromServer, toServer, movieString);
+						System.out.println("\nINSERTING INTO BOX OFFICE");
+						insertBoxOfficeData(fromServer, toServer, movieString);
+						//System.out.println("inserting into company");
+						//insertCompanyData(fromServer, toServer, movieString);
 
 					}
 					
