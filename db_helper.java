@@ -52,7 +52,8 @@ public class db_helper {
 				String ra = movies.getString("rating");
 				String p = movies.getString("plot");
 				String y = movies.getString("production_year");
-				String entry = t + " \t " + g + " \t " + ru + " \t " + ra + " \t " + y + "\nPlot:  " + p;
+				String rd = movies.getString("release_date");
+				String entry = t + " \t " + g + " \t " + ru + " \t " + ra + " \t " + y + "\t " + rd + "\nPlot:  " + p;
 				movie_names.add(entry);
 			}
 		}catch(SQLException e){
@@ -164,7 +165,7 @@ public class db_helper {
 		
 			
 			ResultSet people = stmt.executeQuery(query);
-			System.out.println("got people names");
+			//System.out.println("got people names");
 			while(people.next()){
 				String t = people.getString("name");
 				char_names.add(t);
@@ -176,6 +177,65 @@ public class db_helper {
 		}
 		return char_names;
 	}
+	
+	/*
+	 * get box office data for a single movie
+	 * 
+	 */
+	public String getBoxOfficeData(String movie_id){
+		String box_office = "";
+		System.out.println("querying " + movie_id + " in box_office");
+		
+		String query = "select BO.opening_gross_data,BO.total_gross from box_office as BO, opened as O where o.mid = " + movie_id +
+				" and O.bid = BO.id;";
+		
+		try {
+		
+			ResultSet results = stmt.executeQuery(query);
+			while(results.next()){
+				String owg = results.getString("opening_weekend_gross");
+				String tg = results.getString("total_gross");				
+				box_office = owg +"\t" + tg; 
+			}
+		}catch(SQLException e){
+			System.err.println("box office data for \n" + movie_id);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		return box_office;
+	}	
+	
+	/*
+	 * get production companies for a single movie
+	 * 
+	 */
+	public Vector<String> getProductionCompaniesbyMovie(String movie_id){
+		Vector<String>  companies = new Vector<String>();
+		String line = "";
+		System.out.println("querying " + movie_id + " in production companies");
+		
+		String query = "select PC.id,PC.name from production_companies as PC, produced as P where P.mid = " + movie_id +
+				" and P.company_id = PC.id;";
+		
+		try {
+		
+			ResultSet results = stmt.executeQuery(query);
+			while(results.next()){
+				String id = results.getString("id");
+				String tg = results.getString("name");				
+				line = id +"\t" + tg;
+				
+				companies.add(line);
+			}
+		}catch(SQLException e){
+			System.err.println("production company data error for \n" + movie_id);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		
+		return companies;
+	}	
+	
 
 	//lets create a table
 	// variables(name, type, not null)
@@ -455,14 +515,10 @@ public class db_helper {
 						}catch(NullPointerException d){
 							System.err.println(d.getStackTrace());
 						}
-
-
 					helper.deleteTable(qq);
 					System.out.println("THIS WILL DELETE A TABLE BUT WE DONT WANT THAT TO FUNCTION YET");
 				}
 
-
-			
 	    }
    
 	   System.out.println("end of program"); 
