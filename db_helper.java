@@ -3,12 +3,16 @@ import java.sql.*;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.Iterator;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 
 
 public class db_helper {
 	
 	Connection server;
 	Statement stmt;
+    DatabaseMetaData dbmd;
 	
 	/*
 	 * db_helper constructor
@@ -20,6 +24,7 @@ public class db_helper {
 		    String red_dwarf_url = "jdbc:postgresql://reddwarf.cs.rit.edu/p48501b"; 
 			server = DriverManager.getConnection(red_dwarf_url, "p48501b", "heifohhitheihiqu");
 			stmt = server.createStatement();
+            dbmd = server.getMetaData();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("connection failed");
@@ -322,6 +327,182 @@ public class db_helper {
 		return 1;
 	}
 	
+    /**
+     * Adds a movie and all of its corresponding data, uses the stored procedure add_movie
+     * @param actorArr a vector of string arrays, each array is of length 3 and
+     * formatted as follows: 0th index = Name, 1st index = gender, 2nd index = Role
+     * @param directorsArr, producersArr, writersArr, production_companiesArr
+     * are all vectors of strings
+     * @param opening_day is a Date 
+     */
+    public void addMovie( String name, Vector<String[]> actorArr,
+                         Vector<String> directorsArr, Vector<String> producersArr,
+                         Vector<String> writersArr, int total_gross,
+                         int opening_weekend_gross, Date opening_day,
+                         Vector<String> production_companiesArr, String genre,
+                         String rating, String plot, int runtime,
+                         int production_year ){
+        try{
+            String actors = "";
+            String thisActor[];
+            for( int i = 0; i < actorArr.size(); i++ ){
+                thisActor = actorArr.get(i);
+                actors += thisActor[0] + "," + thisActor[1] + "," + thisActor[2];
+                if( i < actorArr.size() - 1 ){
+                    actors += ";";
+                }
+            }
+            
+            String opening_dayStr = (new SimpleDateFormat( "yyyy.MM.dd" )).format(opening_day);
+            
+            
+            String directors = parseHelper( directorsArr );
+            String writers = parseHelper( writersArr );
+            String producers = parseHelper( producersArr );
+            String production_companies = parseHelper( production_companiesArr );
+            
+            stmt.executeQuery("SELECT * FROM create_movie(" + name + "," + actors +
+                              "," + directors + "," + producers + "," + writers +
+                              "," + total_gross + "," + opening_weekend_gross +
+                              ", TO_DATE('" + opening_dayStr + "','YYYY Mon DD')" +
+                              "," + production_companies + "," + genre + "," + rating +
+                              "," + plot + "," + runtime + "," + production_year + ");" );
+            
+        }catch(SQLException e){
+			System.err.println("error adding movie\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+        
+    }
+    
+    private String parseHelper( Vector<String> toParse ){
+        String toReturn = "";
+        for( int i = 0; i < toParse.size(); i++ ){
+            toReturn += toParse.get(i);
+            if( i < toParse.size() - 1 ){
+                toReturn += ";";
+            }
+        }
+        return toReturn;
+    }
+    
+    /**
+     * Deletes data from a given table where the table IDs for deletion are in IDs
+     * @param table the table to delete from
+     * @param IDs the ids to remove 
+     */
+    public void deleteData(String table, Vector<Integer> IDs){
+        
+        String inStr = "(";
+        
+        for( int i = 0; i < IDs.size(); i++ ){
+            if( i < IDs.size() - 1 ){
+                inStr += Integer.toString( IDs.get(i) ) + ",";
+            }
+        }
+        inStr += ")";
+        
+        try{
+            
+            ResultSet rs = dbmd.getColumns(null, null, table, null);
+            String idCol = rs.getMetaData().getColumnName( 1 );
+            
+            stmt.executeQuery( "delete from " + table + " where " + idCol + " in " + inStr );
+            
+        }catch(SQLException e){
+			System.err.println("error adding movie\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+
+    }
+    
+    /**
+     * Inserts data to a given table with columns (or null if inserting to all columns) and values vals
+     * @param table the table name to insert to
+     * @param cols the columns to update, or null if updating all columns
+     * @param vals the values to insert to the columns
+     */
+    public void insertData(String table, Vector<String> cols, Vector<String> vals){
+        
+        String colsStr = "";
+        if( cols != null ){
+            colsStr = "(";
+            
+            for( int i = 0; i < cols.size(); i++ ){
+                if( i < cols.size() - 1 ){
+                    colsStr += cols.get(i) + ",";
+                }
+            }
+            colsStr += ")";
+        }
+        
+        String valStr = "(";
+        
+        for( int i = 0; i < vals.size(); i++ ){
+            if( i < vals.size() - 1 ){
+                valStr += vals.get(i) + ",";
+            }
+        }
+        valStr += ")";
+        
+        try{
+            
+            stmt.executeQuery( "insert into " + table + colsStr + " values " + valStr );
+            
+        }catch(SQLException e){
+			System.err.println("error adding movie\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+        
+    }
+    
+    /**
+     * Updates data
+     * @param table the table to update
+     * @param cols the columns to update
+     * @param vals the values to set the columns to
+     * @param IDs the IDs to update for the given table
+     */
+    public void updateData(String table, Vector<String> cols, Vector<String> vals, Vector<Integer> IDs){
+        String updateStr = "";
+        for( int i = 0; i < cols.size(); i++ ){
+            
+            updateStr += cols.get(i) + "=" + vals.get(i);
+            
+            if( i < cols.size() - 1 ){
+                updateStr += cols.get(i) + ",";
+            }
+        }
+        
+        String inStr = "(";
+        
+        for( int i = 0; i < IDs.size(); i++ ){
+            if( i < IDs.size() - 1 ){
+                inStr += Integer.toString( IDs.get(i) ) + ",";
+            }
+        }
+        inStr += ")";
+
+        try{
+
+            ResultSet rs = dbmd.getColumns(null, null, table, null);
+            String idCol = rs.getMetaData().getColumnName( 1 );
+
+            stmt.executeQuery( "update " + table + " set " + updateStr + " where " + inStr );
+            
+        }catch(SQLException e){
+			System.err.println("error adding movie\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+        
+    }
+    
+
+    
 	
 	/**
 	 * @param args

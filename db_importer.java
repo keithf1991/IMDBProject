@@ -4,9 +4,9 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 
-public class main {
+public class db_importer {
 
-	public static String flipName(String name){
+  public static String flipName(String name){
 		int comma_location = name.lastIndexOf(",");
 		String last_name = name.substring(0, comma_location);
 		String first_name = name.substring(comma_location+1);
@@ -504,7 +504,7 @@ public class main {
 		return  fromServer.executeQuery(query);		
 	}
 	
-
+/*
 	public static void insertBoxOfficeData(Statement fromServer, Statement toServer, String movie_id){
 		ResultSet weekendGrossData;
 		ResultSet totalGross;
@@ -512,43 +512,45 @@ public class main {
 			//get opening weekend data
 			weekendGrossData = getOpeningWeekendGrossData(fromServer, movie_id);
 			System.out.println("got weekend gross for " + movie_id);
-
-	
+			String id = "";
+			String weekendGrossString = ;
+			boolean empty = true;
+			//weekendGross not empty.  
+			if(totalGross.next()){
+				id = weekendGrossData.getString("id");
+		    	weekendGrossString = weekendGrossData.getString("info");
+				empty = false;
+			}
+			if(empty){
+				
+			}
+			
 			weekendGrossData.first();
-	    	String id = weekendGrossData.getString("id");
-	    	String weekendGrossString = weekendGrossData.getString("info");
+	    	
 
 	    	
-	    	weekendGrossString = weekendGrossString.substring(weekendGrossString.indexOf("$"), weekendGrossString.indexOf(" ") -1 );
+	    	weekendGrossString = weekendGrossString.substring(weekendGrossString.indexOf("$"), weekendGrossString.indexOf(" ") );
 	    	System.out.println("movie with id " + movie_id + " made " + weekendGrossString + " on opening weekend");
 	    	//gets worldwide total
 			totalGross = getWorldTotalGross(fromServer, movie_id);
 			System.out.println("got total gross");
 			
-			boolean empty = true;
+			empty = true;
 			while(totalGross.next()){
 				empty = false;
 			}
 			if(empty){
 				totalGross = getUSATotalGross(fromServer, movie_id);
 			}
+			
 			totalGross.first();
 			
-			/*if(totalGross.last()){
-				int rowCount = totalGross.getRow();
-				System.out.println("total rowCount = " + rowCount);
-				if(rowCount == 0){
-					System.out.println("getting USA gross");
-					totalGross = getUSATotalGross(fromServer, movie_id);
-				}
-			}*/
-
 			System.out.println("extraction of total gross info");
 			totalGross.first();
 	        String id2 = totalGross.getString("id");
 	        String totalGrossinfo = totalGross.getString("info");
 	        
-	        totalGrossinfo = totalGrossinfo.substring(totalGrossinfo.indexOf("$"), totalGrossinfo.indexOf(" ") -1 );
+	        totalGrossinfo = totalGrossinfo.substring(totalGrossinfo.indexOf("$"), totalGrossinfo.indexOf(" ") );
 	        
 	        System.out.println("movie with id " + movie_id + " made " + totalGrossinfo + " in total");
 	        
@@ -567,7 +569,7 @@ public class main {
 		        System.out.println("updated " + id + " with total gross");
 	        }catch(SQLException e){
 	        	System.out.println("could not update box office: " + id + " with total gross info")	;	
-	        }*/
+	        }
 	        
 	        //insert into opened
 	        query = "insert into opened(mid, bid) values ('" + movie_id + "','" + id + "');";
@@ -583,7 +585,93 @@ public class main {
 			e.printStackTrace();
 		}
 		
+	}*/
+	
+	
+	public static void insertBoxOfficeData(Statement fromServer, Statement toServer, String movie_id){
+		ResultSet weekendGrossData;
+		ResultSet totalGross;
+		
+		String openingID = "", totalID = "";
+		String openingInfo = "", totalInfo = "";
+		boolean weekendEmpty = true, grossEmpty = true;
+		
+		try{
+			weekendGrossData = getOpeningWeekendGrossData(fromServer, movie_id);
+			
+			//finds if weekendGross exists
+			if(weekendGrossData.last()){
+				int rowCount = weekendGrossData.getRow();
+				System.out.println("rowCount = " + rowCount);
+				weekendEmpty = false;
+				
+				openingID = weekendGrossData.getString("id");
+				openingInfo = weekendGrossData.getString("info");
+				openingInfo = openingInfo.substring(openingInfo.indexOf("$"), openingInfo.indexOf(" ") );
+				
+			}
+			else{
+				System.out.println("rowCount = 0");
+			}
+			
+			totalGross = getWorldTotalGross(fromServer, movie_id);
+			//finds if totalGross exists
+			if(totalGross.last()){ //not empty
+				int rowCount = totalGross.getRow();
+				System.out.println("worldGross rowCount = " + rowCount);
+				
+			}
+			else{ //worldwide gross empty
+				System.out.println("rowCount = 0");
+				totalGross = getUSATotalGross(fromServer, movie_id);
+				if(totalGross.last()){ //not empty
+					int rowCount = totalGross.getRow();
+					System.out.println("USAGross rowCount = " + rowCount);
+					
+					totalID = totalGross.getString("id");
+					totalInfo = totalGross.getString("info");
+					totalInfo = totalInfo.substring(totalInfo.indexOf("$"), totalInfo.indexOf(" ") );
+					grossEmpty = false;
+				}
+				else{ //usa gross empty
+					
+				}
+			}			
+			String query = "", query2 = ""; 
+			if(weekendEmpty && grossEmpty){
+				System.out.println("no box office data");
+				return ;
+			}else{
+				if(weekendEmpty){ //no opening weekend data
+					query = "insert into box_office (id, opening_weekend_gross, total_gross) values ('" + totalID + "','" + openingInfo + "','" + totalInfo + "');";
+			        query2 = "insert into opened(mid, bid) values ('" + movie_id + "','" + totalID + "');";
+				}else{ //has opening weekend data
+					query = "insert into box_office (id, opening_weekend_gross, total_gross) values ('" + openingID + "','" + openingInfo + "','" + totalInfo + "');";
+					query2 = "insert into opened(mid, bid) values ('" + movie_id + "','" + openingID + "');";
+				}
+			}
+			
+			
+	        try{
+	        	toServer.executeUpdate(query);
+		        System.out.println("inserted into box_office");
+	        }catch(SQLException e){
+	        	System.out.println("box office: already exists in box_office");        	
+		        }
+			
+			//insert into opened
+	        try{
+	        	toServer.executeUpdate(query2);
+		        System.out.println("inserted into opened");
+	        }catch(SQLException e){
+	        	System.out.println("opened entry already exists for " + movie_id + " and " + openingID + " or " + totalID);	
+	        }
+			
+		}catch(SQLException e){
+			System.out.println("sql error");
+		}
 	}
+	
 	
 
 	public static void insertCompanyData(Statement fromServer, Statement toServer, String movie_id){
@@ -633,7 +721,7 @@ public class main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		System.out.println(args[0]);
 		try {
 		    Connection conFrom, conTo;
 		    Statement fromServer,toServer;
@@ -654,7 +742,6 @@ public class main {
 		    System.out.println("connected to blackbird");
 
 			
-		    
 		    //connection to red dwarf
 		    Class.forName("org.postgresql.Driver");
 		    conTo = DriverManager.getConnection(red_dwarf_url, "p48501b", "heifohhitheihiqu");
