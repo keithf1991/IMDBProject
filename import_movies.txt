@@ -1,0 +1,402 @@
+ 1713209 | Bad Taste
+ 1747929 | Braindead
+ 1798483 | Crossing the Line
+ 1947325 | Heavenly Creatures
+ 2025153 | King Kong
+ 2025155 | King Kong 360 3-D
+ 2115612 | Meet the Feebles
+ 2134620 | Mortal Engines
+ 2342843 | Temeraire
+ 2349100 | The Adventures of Tintin: Prisoners of the Sun
+ 2376240 | The Frighteners
+ 2383388 | The Hobbit: An Unexpected Journey
+ 2383390 | The Hobbit: The Desolation of Smaug
+ 2383391 | The Hobbit: There and Back Again
+ 2393885 | The Lord of the Rings: The Fellowship of the Ring
+ 2393888 | The Lord of the Rings: The Return of the King
+ 2393891 | The Lord of the Rings: The Two Towers
+ 2394625 | The Lovely Bones
+ 2429083 | The Valley
+ 2311276 | Spider-Man
+ 2311278 | Spider-Man 2 
+ 2349793 | The Amazing Spider-Man 
+ 2311281 | Spider-Man 3
+ 1742793 | Body Heat
+ 1763477 | Captain EO
+ 1966761 | Howard the Duck
+ 1988094 | Indiana Jones 5
+ 1988100 | Indiana Jones and the Kingdom of the Crystal Skull
+ 1988101 | Indiana Jones and the Last Crusade
+ 1988109 | Indiana Jones and the Temple of Doom
+ 2014316 | Kagemusha
+ 2055264 | Labyrinth
+ 2060239 | Latino
+ 2126654 | Mishima: A Life in Four Chapters
+ 2133705 | More American Graffiti
+ 2219025 | Powaqqatsi
+ 2234912 | Radioland Murders
+ 2235467 | Raiders of the Lost Ark
+ 2241596 | Red Tails
+ 2315689 | Star Tours
+ 2315690 | Star Tours: The Adventures Continue
+ 2315824 | Star Wars
+ 2315875 | Star Wars: Episode I - The Phantom Menace
+ 2315877 | Star Wars: Episode II - Attack of the Clones
+ 2315878 | Star Wars: Episode III - Revenge of the Sith
+ 2315883 | Star Wars: Episode V - The Empire Strikes Back
+ 2315884 | Star Wars: Episode VI - Return of the Jedi
+ 2315924 | Star Wars: The Clone Wars
+ 2389214 | The Land Before Time
+ 2458820 | Tucker: The Man and His Dream
+ 2460985 | Twice Upon a Time
+ 2507530 | Willow
+ 1672083 | After Hours
+ 1678379 | Alice Doesn't Live Here Anymore
+ 1684843 | American Boy: A Profile of: Steven Prince
+ 1747055 | Boxcar Bertha
+ 1750529 | Bringing Out the Dead
+ 1763075 | Cape Fear
+ 1766438 | Casino
+ 1912109 | Furious Love
+ 1915518 | Gangs of New York
+ 1919092 | George Harrison: Living in the Material World
+ 1929405 | Goodfellas
+ 1967680 | Hugo
+ 1971193 | I Call First
+ 1979946 | Il mio viaggio in Italia
+ 1996841 | It's Not Just You, Murray!
+ 1997149 | Italianamerican
+ 2033203 | Kundun
+ 2098950 | Made in Milan
+ 2114625 | Mean Streets
+ 2156633 | New York Stories
+ 2156678 | New York, New York
+ 2227467 | Public Speaking
+ 2235270 | Raging Bull
+ 2287853 | Shine a Light
+ 2290864 | Shutter Island
+ 2292770 | Silence
+ 2294420 | Sinatra
+ 2321905 | Street Scenes
+ 2339876 | Taxi Driver
+ 2349296 | The Age of Innocence
+ 2351833 | The Aviator
+ 2355107 | The Big Shave
+ 2362814 | The Color of Money
+ 2367312 | The Departed
+ 2374806 | The Five Obstructions: Scorsese vs. Trier
+ 2386519 | The Irishman
+ 2387928 | The Key to Reserva
+ 2388370 | The King of Ads
+ 2388382 | The King of Comedy
+ 2390658 | The Last Temptation of Christ
+ 2390763 | The Last Waltz
+ 2402230 | The Neighborhood
+ 2433196 | The Wolf of Wall Street
+ 2474096 | Untitled Bill Clinton Documentary
+ 2482677 | Vesuvius VI
+ 2500380 | What's a Nice Girl Like You Doing in a Place Like This?
+ 1987818 | Independence Day
+ 2006748 | Joey
+ 2133098 | Moon 44
+ 2295065 | Singularity
+ 2316132 | Stargate
+ 2366309 | The Day After Tomorrow
+ 2406350 | The Patriot
+ 2472740 | Universal Soldier
+ 2503684 | White House Down
+ 1787623 | Come Drink with Me
+ 1817260 | Death Proof
+ 1840801 | Django Unchained
+ 1889067 | Faster, Pussycat Kill Kill
+ 1904673 | Four Rooms
+ 1933378 | Grindhouse
+ 1989053 | Inglourious Basterds
+ 1999205 | Jackie Brown
+ 2023760 | Kill Bill: Vol. 1
+ 2023761 | Kill Bill: Vol. 2
+ 2023762 | Kill Bill: Vol. 3
+ 2024039 | Killer Crow
+ 2091190 | Love Birds in Bondage
+ 2142297 | My Best Friend's Birthday
+ 2227970 | Pulp Fiction
+ 2245340 | Reservoir Dogs
+ 2294219 | Sin City
+ 1678825 | Aliens
+ 1678857 | Aliens of the Deep
+ 1708370 | Avatar
+ 1708371 | Avatar 2
+ 1708372 | Avatar 3
+ 1719814 | Battle Angel
+ 1921334 | Ghosts of the Abyss
+ 2209309 | Piranha Part Two: The Spawning
+ 2334190 | T2 3-D: Battle Across Time
+ 2344376 | Terminator 2: Judgment Day
+ 2348355 | The Abyss
+ 2385745 | The Informationist
+ 2390711 | The Last Train from Hiroshima: The Survivors Look Back
+ 2424614 | The Terminator
+ 2443714 | Titanic
+ 2457414 | True Lies
+ 2474297 | Untitled James Cameron/3D Diving Documentary
+ 2514450 | Xenogenesis
+1648887 | A Brief History of Time
+ 1654446 | A Holocaust szemei
+ 1661813 | A Steady Rain
+ 1682836 | Always
+ 1685945 | Amistad
+ 1687340 | An American Tail
+ 1687341 | An American Tail: Fievel Goes West
+ 1697688 | Arachnophobia
+ 1700704 | Artificial Intelligence: AI
+ 1712144 | Back to the Future
+ 1712149 | Back to the Future Part II
+ 1712151 | Back to the Future Part III
+ 1715599 | Balto
+ 1759695 | Cal of the Wild
+ 1763075 | Cape Fear
+ 1766500 | Casper
+ 1767384 | Catch Me If You Can
+ 1777390 | Chocky
+ 1791757 | Continental Divide
+ 1795609 | Cowboys & Aliens
+ 1803803 | Dad
+ 1806086 | Dance with the Devil
+ 1818323 | Deep Impact
+ 1844666 | Don't Say No Until I Finish Talking: The Story of Richard D. Zanuck
+ 1850002 | Dreams
+ 1855749 | E.T. the Extra-Terrestrial
+ 1855845 | Eagle Eye
+ 1871202 | Empire of the Sun
+ 1877264 | Escape to Nowhere
+ 1887461 | Fandango
+ 1898108 | Flags of Our Fathers
+ 1932944 | Gremlins
+ 1932947 | Gremlins 2: The New Batch
+ 1943411 | Harry and the Hendersons
+ 1951338 | Hereafter
+ 1974460 | I Wanna Hold Your Hand
+ 1975232 | I'm Mad
+ 1989609 | Innerspace
+ 1992112 | Interstellar
+ 1999201 | Jackie
+ 2006685 | Joe Versus the Volcano
+ 2011721 | Jurassic Park III
+ 2011723 | Jurassic Park IV
+ 2076260 | Letters from Iwo Jima
+ 2080684 | Lincoln
+ 2117399 | Memoirs of a Geisha
+ 2117924 | Men in Black
+ 2117925 | Men in Black 3
+ 2117929 | Men in Black II
+ 2132432 | Monster House
+ 2139951 | Munich
+ 2209380 | Pirate Latitudes
+ 2215007 | Poltergeist
+ 2221888 | Price for Peace
+ 2239580 | Real Steel
+ 2239582 | Real Steel 2
+ 2252323 | Robopocalypse
+ 2253988 | Roller Coaster Rabbit
+ 2269466 | Saving Private Ryan
+ 2271203 | Schindler's List
+ 2290261 | Shrek
+ 2310834 | Spell Your Name
+ 2327255 | Super 8
+ 2349099 | The Adventures of Tintin
+ 2349100 | The Adventures of Tintin: Prisoners of the Sun
+ 2354676 | The Big Bad Heist
+ 2362829 | The Color Purple
+ 2375065 | The Flintstones
+ 2379460 | The Goonies
+ 2382114 | The Haunting
+ 2389214 | The Land Before Time
+ 2389706 | The Last Days
+ 2391577 | The Legend of Zorro
+ 2394006 | The Lost Children of Berlin
+ 2394625 | The Lovely Bones
+ 2398033 | The Mask of Zorro
+ 2400323 | The Money Pit
+ 2413881 | The Rivals
+ 2424610 | The Terminal
+ 2426835 | The Trial of the Chicago 7
+ 2439072 | Three O'Clock High
+ 2451972 | Trail Mix-Up
+ 2452804 | Transformers
+ 2452811 | Transformers: Dark of the Moon
+ 2452817 | Transformers: Revenge of the Fallen
+ 2452821 | Transformers: The Ride - 3D
+ 2457388 | True Grit
+ 2459302 | Tummy Trouble
+ 2461084 | Twilight Zone: The Movie
+ 2461456 | Twister
+ 2474300 | Untitled James Hunt Biopic
+ 2474594 | Untitled Third Tintin Film
+ 2474605 | Untitled Transformers Sequel
+ 2476377 | Used Cars
+ 2488172 | Voices from the Dead
+ 2493374 | War Horse
+ 2496339 | We're Back! A Dinosaur's Story
+ 2502233 | When Worlds Collide
+ 2504315 | Who Framed Roger Rabbit
+ 2504317 | Who Framed Roger Rabbit 2
+ 2520849 | Young Sherlock Holmes
+ 1646871 | 7 Minutes in Heaven
+ 1679653 | All I've Got
+ 1743127 | Boilerplate
+ 1784149 | Cloverfield
+ 1786626 | Collider
+ 1903272 | Forever Young
+ 1926336 | God Particle
+ 1939082 | Half-Life
+ 1963617 | Hot for Teacher
+ 1988827 | Infinitely Polar Bear
+ 2009383 | Joy Ride
+ 2031548 | Kre-O Star Trek
+ 2075609 | Let the Great World Spin
+ 2082050 | Little Darlings
+ 2122241 | Micronauts
+ 2127752 | Mission: Impossible - Ghost Protocol
+ 2127755 | Mission: Impossible 5
+ 2134385 | Morning Glory
+ 2145607 | Mystery on Fifth Avenue
+ 2180672 | One Last Thing Before I Go
+ 2217002 | Portal
+ 2242546 | Regarding Henry
+ 2315700 | Star Trek
+ 2315703 | Star Trek 3
+ 2315709 | Star Trek Into Darkness
+ 2315885 | Star Wars: Episode VII
+ 2327255 | Super 8
+ 2386474 | The Invisible Woman
+ 2405743 | The Pallbearer
+ 2406699 | The People Speak
+ 2422951 | The Suburbans
+ 1696388 | Apocalypse Now
+ 1763477 | Captain EO
+ 1820046 | Dementia 13
+ 1848716 | Dracula
+ 1895701 | Finian's Rainbow
+ 1915964 | Gardens of Stone
+ 1998595 | Jack
+ 2153204 | Nebo zovyot
+ 2156633 | New York Stories
+ 2180376 | One from the Heart
+ 2201166 | Peggy Sue Got Married
+ 2258360 | Rumble Fish
+ 2328234 | Supernova
+ 2345414 | Tetro
+ 2353824 | The Bellboy and the Playgirls
+ 2363642 | The Conversation
+ 2363995 | The Cotton Club
+ 2378773 | The Godfather
+ 2378795 | The Godfather: Part II
+ 2378796 | The Godfather: Part III
+ 2405401 | The Outsiders
+ 2411260 | The Rain People
+ 2411307 | The Rainmaker
+ 2424676 | The Terror
+ 2447794 | Tonight for Sure
+ 2458820 | Tucker: The Man and His Dream
+ 2461490 | Twixt
+ 2520010 | You're a Big Boy Now
+ 2521340 | Youth Without Youth
+ 1719609 | Batman Begins
+ 1781543 | Citizen Hughes: The Power, the Money and the Madness
+ 1845385 | Doodlebug
+ 1901024 | Following
+ 1987389 | Inception
+ 1990930 | Insomnia
+ 1992112 | Interstellar
+ 2117335 | Memento
+ 2365973 | The Dark Knight
+ 2365978 | The Dark Knight Rises
+ 2409145 | The Prestige
+ 1642248 | 20,000 Leagues Under the Sea: Captain Nemo
+ 1678887 | Alien��
+ 1893572 | Fight Club
+ 1928343 | Gone Girl
+ 1947427 | Heavy Metal
+ 2193069 | Panic Room
+ 2274139 | Se7en
+ 2353480 | The Beat of the Live Drum
+ 2365328 | The Curious Case of Benjamin Button
+ 2376744 | The Game
+ 2378345 | The Girl with the Dragon Tattoo
+ 2412562 | The Reincarnation of Peter Proud
+ 2419922 | The Social Network
+ 2526057 | Zodiac
+ 1640075 | 1492: Conquest of Paradise
+ 1653796 | A Good Year
+ 1678620 | Alien
+ 1680280 | All the Invisible Children
+ 1685110 | American Gangster
+ 1736467 | Black Hawk Down
+ 1737027 | Black Rain
+ 1737796 | Blade Runner
+ 1742837 | Body of Lies
+ 1747207 | Boy and Bicycle
+ 1748423 | Brave New World
+ 1913252 | G.I. Jane
+ 1919596 | Gertrude Bell
+ 1924445 | Gladiator
+ 1940995 | Hannibal
+ 2025584 | Kingdom of Heaven
+ 2069488 | Legend
+ 2111792 | Matchstick Men
+ 2225677 | Prometheus
+ 2252037 | Robin Hood
+ 2305313 | Someone to Watch Over Me
+ 2362810 | The Color of Lightening
+ 2364041 | The Counselor
+ 2369846 | The Duellists
+ 2375608 | The Forever War
+ 2388288 | The Kind One
+ 2435318 | Thelma & Louise
+ 2474104 | Untitled Blade Runner Project
+ 2503972 | White Squall
+ 1719858 | Battle for Bonneville
+ 1773829 | Chef
+ 1795609 | Cowboys & Aliens
+ 1961923 | Hooligans
+ 1994271 | Iron Man
+ 1994273 | Iron Man 2
+ 1994275 | Iron Man 3
+ 2098811 | Made
+ 2153028 | Neanderthals
+ 2332092 | Swingers
+ 2351797 | The Avengers
+ 2354842 | The Big Empty
+ 1645650 | 4: Rise of the Silver Surfer
+ 1694722 | Ant-Man
+ 1737808 | Blade: Trinity
+ 1763396 | Captain America: The First Avenger
+ 1763397 | Captain America: The Winter Soldier
+ 1807981 | Daredevil
+ 1817454 | Deathlok
+ 1841928 | Doctor Strange
+ 1868772 | Elektra
+ 1887788 | Fantastic Four
+ 1934554 | Guardians of the Galaxy
+ 1967896 | Hulk
+ 1994271 | Iron Man
+ 1994273 | Iron Man 2
+ 1994275 | Iron Man 3
+ 2104974 | Man-Thing
+ 2228330 | Punisher: War Zone
+ 2258819 | Runaways
+ 2311278 | Spider-Man 2
+ 2311281 | Spider-Man 3
+ 2323850 | Sub-Mariner
+ 2349793 | The Amazing Spider-Man
+ 2351797 | The Avengers
+ 2351798 | The Avengers 2
+ 2381620 | The Hands of Shang-Chi
+ 2385491 | The Incredible Hulk
+ 2410446 | The Punisher
+ 2410448 | The Punisher
+ 2438243 | Thor
+ 2438253 | Thor: The Dark World
+ 2514252 | X-Men
+ 2514278 | X-Men: The Last Stand
+ 2514338 | X2
