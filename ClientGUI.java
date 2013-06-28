@@ -23,46 +23,45 @@ public class ClientGUI implements ActionListener {
 	
 	JButton searchButton = new JButton("Search");
 	
-	JTextField textField = new JTextField("");
-	JTable table = new JTable(6,3);
+	JTextField textField = new JTextField("Search Field");
+	JTable table = new JTable(12,8);
 	Vector<String> results = new Vector<String>();
+	db_helper db = new db_helper();
 	
 	public ClientGUI() {
 		
-
-	results.add("test1");
-	results.add("test2");
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
-	win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	win.setLocation(400,300);	
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		win.setLocation(400,300);	
 	
-	win.add(menuPanel, BorderLayout.NORTH);
-	win.add(searchPanel, BorderLayout.WEST);
-	win.add(displayPanel, BorderLayout.CENTER);
+		win.add(menuPanel, BorderLayout.NORTH);
+		win.add(searchPanel, BorderLayout.WEST);
+		win.add(displayPanel, BorderLayout.CENTER);
 	
-	menuPanel.setLayout(new GridLayout(1,4));
-	searchPanel.setLayout(new GridLayout(2,1));
-	displayPanel.setLayout(new GridLayout(1,1));
+		menuPanel.setLayout(new GridLayout(1,4));
+		searchPanel.setLayout(new GridLayout(2,1));
+		displayPanel.setLayout(new GridLayout(1,1));
 	
-	menuPanel.add(retButton);
-	menuPanel.add(crButton);
-	menuPanel.add(upButton);
-	menuPanel.add(delButton);
+		menuPanel.add(retButton);
+		menuPanel.add(crButton);
+		menuPanel.add(upButton);
+		menuPanel.add(delButton);
 	
-	searchPanel.add(textField);
-	searchPanel.add(searchButton);
-	displayPanel.add(table);
+		searchPanel.add(textField);
+		searchPanel.add(searchButton);	
+		displayPanel.add(table);
 	
-	retButton.addActionListener(this);
-	crButton.addActionListener(this);
-	upButton.addActionListener(this);
-	delButton.addActionListener(this);
+		retButton.addActionListener(this);
+		crButton.addActionListener(this);
+		upButton.addActionListener(this);
+		delButton.addActionListener(this);
 	
-	searchButton.addActionListener(this);
+		searchButton.addActionListener(this);
 	
-	
-	win.pack();
-	win.setVisible(true);
+		win.pack();
+		win.setVisible(true);
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -74,14 +73,40 @@ public class ClientGUI implements ActionListener {
 			}
 			
 			if (clickedButton.equals(searchButton)) {
+				
+				try{
+					
+				String query = textField.getText();
+				results = db.getMoviedata(query);
 				Iterator itr = results.iterator();
 				
-				int x = 0;
+				int x = 1;
+				int y = 0;
+				
+				table.setValueAt("Movie Results:", 0 ,0);
+				table.setValueAt("People Results:", 0 ,1);
+				
 				while (itr.hasNext() ) {
-					table.setValueAt(itr.next(),0,x );
+					
+					table.setValueAt(itr.next(),x,y);
 					x++;
 				}
 				
+				y++;
+				x = 1;
+				results = db.getPeopleData(query);
+				itr = results.iterator();
+				
+				while (itr.hasNext() ) {
+					
+					table.setValueAt(itr.next(),x,y);
+					x++;
+				}
+				
+				
+				} catch (ArrayIndexOutOfBoundsException ex) {
+					System.err.println("ArrayIndexOutOfBoundsException thrown");
+				}
 			}
 			
 			if (clickedButton.equals(crButton)) {
@@ -104,9 +129,7 @@ public class ClientGUI implements ActionListener {
 		// TODO Auto-generated method stub
 
 	ClientGUI client = new ClientGUI();
-
-
-		
+	
 	}
 
 }
