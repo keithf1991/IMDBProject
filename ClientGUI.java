@@ -77,32 +77,51 @@ public class ClientGUI implements ActionListener {
 				try{
 					
 				String query = textField.getText();
-				results = db.getMoviedata(query);
-				Iterator itr = results.iterator();
+				Vector<movie> movieResults = new Vector<movie>(); 
+				movieResults = db.getMoviedata(query);
+				Iterator itr = movieResults.iterator();
 				
-				int x = 1;
-				int y = 0;
+				int r = 0;
+				int c = 0;
 				
-				table.setValueAt("Movie Results:", 0 ,0);
-				table.setValueAt("People Results:", 0 ,1);
+				table.setValueAt("Movie ID:", r ,c++);
+				table.setValueAt("Title:", r ,c++);
+				table.setValueAt("Genre:", r, c++);
+				table.setValueAt("Rating:", r, c++);
+				table.setValueAt("Runtime:", r, c++);
+				table.setValueAt("Production Year:", r, c++);
+				table.setValueAt("Release Date:", r, c++);
+				table.setValueAt("Plot", r, c++);
 				
-				while (itr.hasNext() ) {
-					
-					table.setValueAt(itr.next(),x,y);
-					x++;
-				}
-				
-				y++;
-				x = 1;
-				results = db.getPeopleData(query);
-				itr = results.iterator();
 				
 				while (itr.hasNext() ) {
+					movie tempMovie = new movie();
+					tempMovie = (movie)itr.next();
+					table.setValueAt(tempMovie.getMid(),r,c++);
+					table.setValueAt(tempMovie.getTitle(),r,c++);
+					table.setValueAt(tempMovie.getGenre(),r,c++);
+					table.setValueAt(tempMovie.getRating(),r,c++);
+					table.setValueAt(tempMovie.getRuntime(),r,c++);
+					table.setValueAt(tempMovie.getProduction_year(),r,c++);
+					table.setValueAt(tempMovie.getRelease_date(),r,c++);
+					table.setValueAt(tempMovie.getPlot(),r,c++);
 					
-					table.setValueAt(itr.next(),x,y);
-					x++;
+					c = 0;
 				}
 				
+				r++;
+				c = 1;
+				//results = db.getPeopleData(query);
+				//itr = results.iterator();
+				
+				/*
+				while (itr.hasNext() ) {
+					
+					table.setValueAt(itr.next(),r,c);
+					r++;
+				}
+				*/
+				table.revalidate();
 				
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					System.err.println("ArrayIndexOutOfBoundsException thrown");
