@@ -64,7 +64,7 @@ public class db_helper {
 		}catch(SQLException e){
 			System.err.println("error getting movie names\n" + e);
 		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
+			System.err.println("null pointer exception" + d.getStackTrace());
 		}
 		
 		return movie_data;

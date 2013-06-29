@@ -6,7 +6,7 @@
 public class movie {
   
 	String title, genre, plot, rating,release_date;
-	int mid,runtime, production_year;
+	Integer mid,runtime, production_year;
 	
 	public movie(){
 		title = "";		
@@ -14,10 +14,11 @@ public class movie {
 		plot = "";
 		rating = "";
 		release_date = "";
+			
+		mid = null;
 		
-		mid = (Integer) null;
-		runtime = (Integer) null;
-		production_year = (Integer)null;		
+		runtime = null;
+		production_year = null;		
 	}
 
 	/**

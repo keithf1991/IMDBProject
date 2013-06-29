@@ -2,13 +2,13 @@
 public class person {
   
 	String name, gender;
-	int id;
+	Integer id;
 	
 	public person(){
 		name = "";
 		gender = "";
 		
-		id = (Integer) null;
+		id = null;
 	}
 	
 	public person(int id, String name, String gender){

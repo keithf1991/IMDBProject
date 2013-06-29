@@ -2,11 +2,11 @@
 public class character {
 
 	String name;
-	int id;
+	Integer id;
 	
 	public character(){
 		name = "";
-		id = (Integer) null;
+		id =  null;
 	}
 	
 	public character(int id, String name){
