@@ -24,7 +24,7 @@ public class ClientGUI implements ActionListener {
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
 	
-	JTable table = new JTable(15,13);
+	JTable table = new JTable(13,13);
 	
 	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
@@ -99,75 +99,74 @@ public class ClientGUI implements ActionListener {
 					int r = 0;
 					int c = 0;
 				
-					table.setValueAt("Movie ID:", r ,c++);
-					table.setValueAt("Title:", r ,c++);
-					table.setValueAt("Genre:", r, c++);
-					table.setValueAt("Rating:", r, c++);
-					table.setValueAt("Runtime:", r, c++);
-					table.setValueAt("Production Year:", r, c++);
-					table.setValueAt("Release Date:", r, c++);
-					table.setValueAt("Plot", r, c++);
+					table.setValueAt("Movie ID:", r++ ,c);
+					table.setValueAt("Title:", r++ ,c);
+					table.setValueAt("Genre:", r++, c);
+					table.setValueAt("Rating:", r++, c);
+					table.setValueAt("Runtime:", r++, c);
+					table.setValueAt("Production Year:", r++, c);
+					table.setValueAt("Release Date:", r++, c);
+					table.setValueAt("Plot:", r++, c);
 					
-					r++;
-					c = 0;
+					r = 0;
+					c++;
 					
 					while (itr.hasNext() ) {
 						movie tempMovie = new movie();
 						tempMovie = (movie)itr.next();
-						table.setValueAt(tempMovie.getMid(),r,c++);
-						table.setValueAt(tempMovie.getTitle(),r,c++);
-						table.setValueAt(tempMovie.getGenre(),r,c++);
-						table.setValueAt(tempMovie.getRating(),r,c++);
-						table.setValueAt(tempMovie.getRuntime(),r,c++);
-						table.setValueAt(tempMovie.getProduction_year(),r,c++);
-						table.setValueAt(tempMovie.getRelease_date(),r,c++);
-						table.setValueAt(tempMovie.getPlot(),r,c++);
+						table.setValueAt(tempMovie.getMid(),r++,c);
+						table.setValueAt(tempMovie.getTitle(),r++,c);
+						table.setValueAt(tempMovie.getGenre(),r++,c);
+						table.setValueAt(tempMovie.getRating(),r++,c);
+						table.setValueAt(tempMovie.getRuntime(),r++,c);
+						table.setValueAt(tempMovie.getProduction_year(),r++,c);
+						table.setValueAt(tempMovie.getRelease_date(),r++,c);
+						table.setValueAt(tempMovie.getPlot(),r++,c);
 						
-						c = 0;
-						r++;
+						r = 0;
+						c++;
 					}
 					
-					r = 0;
-					c = 8;
+					r = 8;
+					c = 0;
 					
-					table.setValueAt("Person ID:", r ,c++);
-					table.setValueAt("Name:", r ,c++);
-					table.setValueAt("Gender:", r, c++);
+					table.setValueAt("Person ID:", r++ ,c);
+					table.setValueAt("Name:", r++ ,c);
+					table.setValueAt("Gender:", r++, c);
 					
-					c = 8;
-					r++;
+					r = 8;
+					c++;
 					itr = peopleResults.iterator();
-					
 					
 					while (itr.hasNext() ) {
 						person tempPerson = new person();
 						tempPerson = (person)itr.next();
-						table.setValueAt(tempPerson.getId(),r,c++);
-						table.setValueAt(tempPerson.getName(),r,c++);
-						table.setValueAt(tempPerson.getGender(),r,c++);
+						table.setValueAt(tempPerson.getId(),r++,c);
+						table.setValueAt(tempPerson.getName(),r++,c);
+						table.setValueAt(tempPerson.getGender(),r++,c);
 						
-						c = 8;
-						r++;
+						r = 8;
+						c++;
 					}
 					
-					c = 11;
-					r = 0;
-					table.setValueAt("Role ID:", r ,c++);
-					table.setValueAt("Name:", r ,c++);
+					r = 11;
+					c = 0;
+					table.setValueAt("Role ID:", r++ ,c);
+					table.setValueAt("Name:", r++ ,c);
 					
-					r++;
-					c = 11;
+					c++;
+					r = 11;
 					itr = charResults.iterator();
 					
 					while (itr.hasNext() ) {
 						character tempChar = new character();
 						tempChar = (character)itr.next();
-						table.setValueAt(tempChar.getId(),r,c++);
-						table.setValueAt(tempChar.getName(),r,c++);
+						table.setValueAt(tempChar.getId(),r++,c);
+						table.setValueAt(tempChar.getName(),r++,c);
 						
 						
-						c = 11;
-						r++;
+						r = 11;
+						c++;
 					}
 					table.revalidate();
 					
