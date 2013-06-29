@@ -7,7 +7,6 @@
  2115612 | Meet the Feebles
  2134620 | Mortal Engines
  2342843 | Temeraire
- 2349100 | The Adventures of Tintin: Prisoners of the Sun
  2376240 | The Frighteners
  2383388 | The Hobbit: An Unexpected Journey
  2383390 | The Hobbit: The Desolation of Smaug
@@ -400,3 +399,253 @@
  2514252 | X-Men
  2514278 | X-Men: The Last Stand
  2514338 | X2
+ 2417840 | The Shawshank Redemption
+ 2378773 | The Godfather
+ 2378795 | The Godfather: Part II
+ 2227970 | Pulp Fiction
+ 1978546 | Il buono, il brutto, il cattivo.
+ 2365973 | The Dark Knight
+ 1639596 | 12 Angry Men
+ 2271203 | Schindler's List
+ 2393888 | The Lord of the Rings: The Return of the King
+ 1893572 | Fight Club
+ 2315883 | Star Wars: Episode V - The Empire Strikes Back
+ 2393885 | The Lord of the Rings: The Fellowship of the Ring
+ 2180333 | One Flew Over the Cuckoo's Nest
+ 1987389 | Inception
+ 1929405 | Goodfellas
+ 2315824 | Star Wars
+ 2287257 | Shichinin no samurai
+ 1903769 | Forrest Gump
+ 2398298 | The Matrix
+ 2393891 | The Lord of the Rings: The Two Towers
+ 1780034 | Cidade de Deus
+ 2274139 | Se7en
+ 2418569 | The Silence of the Lambs
+ 1758374 | C'era una volta il West
+ 1766094 | Casablanca
+ 2428974 | The Usual Suspects
+ 2235467 | Raiders of the Lost Ark
+ 2239910 | Rear Window
+ 1996457 | It's a Wonderful Life
+ 2227092 | Psycho
+ 2096511 | Léon
+ 2326898 | Sunset Blvd.
+ 1685192 | American History X
+ 2117335 | Memento
+ 1696388 | Apocalypse Now
+ 2344376 | Terminator 2: Judgment Day
+ 2269466 | Saving Private Ryan
+ 1848629 | Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb
+ 1781726 | City Lights
+ 1678620 | Alien
+ 2278242 | Sen to Chihiro no kamikakushi
+ 2164877 | North by Northwest
+ 2129734 | Modern Times
+ 1781550 | Citizen Kane
+ 1712144 | Back to the Future
+ 1840801 | Django Unchained
+ 2418076 | The Shining
+ 2407456 | The Pianist
+ 2054659 | La vita è bella
+ 2365978 | The Dark Knight Rises
+ 2367312 | The Departed
+ 2096704 | M
+ 2482392 | Vertigo
+ 2198855 | Paths of Glory
+ 1684811 | American Beauty
+ 2339876 | Taxi Driver
+ 1678825 | Aliens
+ 1846965 | Double Indemnity
+ 2451186 | Toy Story 3
+ 2492535 | WALL·E
+ 1810253 | Das Leben der Anderen
+ 1992795 | Intouchables
+ 2380751 | The Green Mile
+ 1924445 | Gladiator
+ 1650026 | A Clockwork Orange
+ 2380006 | The Great Dictator
+ 2063536 | Le fabuleux destin d'Amélie Poulain
+ 2409145 | The Prestige
+ 2061053 | Lawrence of Arabia
+ 2444811 | To Kill a Mockingbird
+ 2245340 | Reservoir Dogs
+ 1809214 | Das Boot
+ 2168263 | Nuovo Cinema Paradiso
+ 2425102 | The Third Man
+ 2392499 | The Lion King
+ 2245088 | Requiem for a Dream
+ 2426699 | The Treasure of the Sierra Madre
+ 1879103 | Eternal Sunshine of the Spotless Mind
+ 2179766 | Once Upon a Time in America
+ 2315884 | Star Wars: Episode VI - Return of the Jedi
+ 1911278 | Full Metal Jacket
+ 2040477 | L.A. Confidential
+ 1748443 | Braveheart
+ 2176997 | Oldeuboi
+ 1776750 | Chinatown
+ 2294879 | Singin' in the Rain
+ 2132931 | Monty Python and the Holy Grail
+ 2305028 | Some Like It Hot
+ 2055635 | Ladri di biciclette
+ 2120321 | Metropolis
+ 1683330 | Amadeus
+ 2237817 | Rashômon
+ 1642394 | 2001: A Space Odyssey
+ 1679202 | All About Eve
+ 2421726 | The Sting
+ 2472220 | Unforgiven
+ 1988101 | Indiana Jones and the Last Crusade
+ 2350531 | The Apartment
+ 2235270 | Raging Bull
+ 2358124 | The Bridge on the River Kwai
+ 2509817 | Witness for the Prosecution
+ 1964176 | Hotaru no haka
+ 1833184 | Die Hard
+ 1719609 | Batman Begins
+ 2006479 | Jodaeiye Nader az Simin
+ 2522264 | Yôjinbô
+ 1989053 | Inglourious Basterds
+ 2301491 | Snatch.
+ 2202589 | Per qualche dollaro in più
+ 2380033 | The Great Escape
+ 1864896 | El laberinto del fauno
+ 1825598 | Der Untergang
+ 2137868 | Mr. Smith Goes to Washington
+ 2474933 | Up
+ 2451182 | Toy Story
+ 2179293 | On the Waterfront
+ 2370538 | The Elephant Man
+ 2377227 | The General
+ 1828301 | Det sjunde inseglet
+ 1947050 | Heat
+ 2396608 | The Maltese Falcon
+ 1737796 | Blade Runner
+ 2387978 | The Kid
+ 2239990 | Rebecca
+ 1931017 | Gran Torino
+ 2270343 | Scarface
+ 2301097 | Smultronstället
+ 1888347 | Fargo
+ 2236905 | Ran
+ 2354973 | The Big Lebowski
+ 2450298 | Touch of Evil
+ 2367100 | The Deer Hunter
+ 1792564 | Cool Hand Luke
+ 2378881 | The Gold Rush
+ 1995992 | It Happened One Night
+ 2084918 | Lock, Stock and Two Smoking Barrels
+ 2161366 | No Country for Old Men
+ 2294219 | Sin City
+ 2321136 | Strangers on a Train
+ 1766438 | Casino
+ 2001871 | Jaws
+ 2419169 | The Sixth Sense
+ 2211007 | Platoon
+ 2424967 | The Thing
+ 1756737 | Butch Cassidy and the Sundance Kid
+ 2452340 | Trainspotting
+ 1929158 | Good Will Hunting
+ 2433122 | The Wizard of Oz
+ 1953888 | High Noon
+ 2023760 | Kill Bill: Vol. 1
+ 1964436 | Hotel Rwanda
+ 2351797 | The Avengers
+ 2493851 | Warrior
+ 1866964 | El secreto de sus ojos
+ 1693938 | Annie Hall
+ 1928400 | Gone with the Wind
+ 2315709 | Star Trek Into Darkness
+ 2379741 | The Grapes of Wrath
+ 2447639 | Tonari no Totoro
+ 2166420 | Notorious
+ 2477142 | V for Vendetta
+ 1992729 | Into the Wild
+ 1895449 | Finding Nemo
+ 2078798 | Life of Brian
+ 1830323 | Dial M for Murder
+ 1966596 | How to Train Your Dragon
+ 2388522 | The King's Speech
+ 2435735 | There Will Be Blood
+ 2403059 | The Night of the Hunter
+ 2355136 | The Big Sleep
+ 2424614 | The Terminator
+ 2155170 | Network
+ 1725596 | Ben-Hur
+ 2124338 | Million Dollar Baby
+ 2315099 | Stand by Me
+ 1933732 | Groundhog Day
+ 2354495 | The Best Years of Our Lives
+ 1845267 | Donnie Darko
+ 2460817 | Twelve Monkeys
+ 1842290 | Dog Day Afternoon
+ 2073909 | Les quatre cents coups
+ 2110317 | Mary and Max
+ 1686654 | Amores perros
+ 2357239 | The Bourne Ultimatum
+ 2203891 | Persona
+ 1737268 | Black Swan
+ 1914998 | Gandhi
+ 1944602 | Hauru no ugoku shiro
+ 2388212 | The Killing
+ 2379616 | The Graduate
+ 1648296 | A Beautiful Mind
+ 2409590 | The Princess Bride
+ 1647488 | 8½
+ 2504726 | Who's Afraid of Virginia Woolf?
+ 2384956 | The Hustler
+ 2052796 | La strada
+ 2299784 | Slumdog Millionaire
+ 2078808 | Life of Pi
+ 2253264 | Rocky
+ 2383388 | The Hobbit: An Unexpected Journey
+ 1690141 | Anatomy of a Murder
+ 2397500 | The Manchurian Candidate
+ 2432436 | The Wild Bunch
+ 2371949 | The Exorcist
+ 2255596 | Rope
+ 2397290 | The Man Who Shot Liberty Valance
+ 2314821 | Stalag 17
+ 1718661 | Barry Lyndon
+ 2299062 | Sleuth
+ 1986334 | In the Name of the Father
+ 2135945 | Mou gaan dou
+ 2351273 | The Artist
+ 2254268 | Roman Holiday
+ 2314886 | Stalker
+ 2427236 | The Truman Show
+ 2209464 | Pirates of the Caribbean: The Curse of the Black Pearl
+ 2132616 | Monsters, Inc.
+ 2263752 | Salinui chueok
+ 2202622 | Per un pugno di dollari
+ 1840043 | District 9
+ 1943500 | Harry Potter and the Deathly Hallows: Part 2
+ 2315700 | Star Trek
+ 2518394 | Yip Man
+ 2066904 | Le scaphandre et le papillon
+ 2238043 | Ratatouille
+ 1662011 | A Streetcar Named Desire
+ 2011716 | Jurassic Park
+ 2046369 | La haine
+ 2290864 | Shutter Island
+ 2334435 | Taare Zameen Par
+ 1722007 | Beauty and the Beast
+ 1680046 | All Quiet on the Western Front
+ 1987376 | Incendies
+ 2235675 | Rain Man
+ 1644113 | 3 Idiots
+ 2019944 | Kaze no tani no Naushika
+ 2256083 | Rosemary's Baby
+ 1943815 | Harvey
+ 2145685 | Mystic River
+ 2194426 | Papillon
+ 2105692 | Manhattan
+ 2165330 | Nosferatu, eine Symphonie des Grauens
+ 2428818 | The Untouchables
+ 1743662 | Bom yeoreum gaeul gyeoul geurigo bom
+ 2407067 | The Perks of Being a Wallflower
+ 1884588 | Fa yeung nin wa
+ 2456406 | Trois couleurs: Rouge
+ 1700144 | Arsenic and Old Lace
+ 2249919 | Rio Bravo
+ 2382656 | The Help

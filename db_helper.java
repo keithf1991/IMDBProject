@@ -78,7 +78,7 @@ public class db_helper {
 		Vector<person> people_names = new Vector<person>();
 		System.out.println("querying " + name + " in people" );
 		
-		String query = "select id,name,gender from person where name like '%" + name + "%';";
+		String query = "select pid,name,gender from person where name like '%" + name + "%';";
 		
 		try {
 			
@@ -112,7 +112,7 @@ public class db_helper {
 		Vector<character> characterData = new Vector<character>();
 		System.out.println("querying " + name + " in characters ");
 		
-		String query = "select id,name from characters where name like '%" + name + "%';";
+		String query = "select rid,name from characters where name like '%" + name + "%';";
 		
 		try {
 		
@@ -166,10 +166,11 @@ public class db_helper {
 		return BO;
 	}	
 	
-	/*
-	 * get production companies for a single movie
-	 * 
-	 */
+/**
+ * get production companies related to a movie
+ * @param movie_id
+ * @return
+ */
 	public Vector<production_company> getProductionCompaniesbyMovie(String movie_id){
 		Vector<production_company>  companies = new Vector<production_company>();
 		String line = "";
