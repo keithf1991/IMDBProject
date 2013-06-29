@@ -1,5 +1,6 @@
 import java.io.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.Iterator;
@@ -9,7 +10,7 @@ public class db_helper {
 	
 	Connection server;
 	Statement stmt;
-	
+	DatabaseMetaData dbmd;
 	/*
 	 * db_helper constructor
 	 */
@@ -20,6 +21,7 @@ public class db_helper {
 		    String red_dwarf_url = "jdbc:postgresql://reddwarf.cs.rit.edu/p48501b"; 
 			server = DriverManager.getConnection(red_dwarf_url, "p48501b", "heifohhitheihiqu");
 			stmt = server.createStatement();
+			dbmd = server.getMetaData();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("connection failed");
@@ -322,9 +324,7 @@ public class db_helper {
 	}*/
 		return 1;
 	}
-	
-<<<<<<< HEAD
-=======
+
     /**
      * Adds a movie and all of its corresponding data, uses the stored procedure add_movie
      * @param actorArr a vector of string arrays, each array is of length 3 and
@@ -502,9 +502,6 @@ public class db_helper {
     }
     
 
-    
->>>>>>> 5ff9ca8d03f49671097508e0d6144e72cd978d4c
-	
 	/**
 	 * @param args
 	 * @throws IOException 
@@ -531,7 +528,7 @@ public class db_helper {
         String total_gross = "$43289032";
         String opening_weekend_gross = "$9203";
         
-        Date opening_day = new Date();
+        Date opening_day = new Date(1, 1, 1);
         
         Vector<String[]> production_companies = new Vector<String[]>();
         production_companies.add( new String[]{"dfjslk;jfdksl", "behind you"} );
