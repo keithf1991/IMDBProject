@@ -24,16 +24,16 @@ public class ClientGUI implements ActionListener {
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
 	
-	JTable table = new JTable(13,15);
+	JTable table = new JTable(15,13);
 	
-	JScrollPane scroll = new JScrollPane(table);
+	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
 	//Vector<String> results = new Vector<String>();
 	db_helper db = new db_helper();
 	
 	public ClientGUI() {
 		
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.setLocation(200,300);	
@@ -169,7 +169,6 @@ public class ClientGUI implements ActionListener {
 						c = 11;
 						r++;
 					}
-					
 					table.revalidate();
 					
 				} catch (ArrayIndexOutOfBoundsException ex) {
