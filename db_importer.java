@@ -638,12 +638,13 @@ public class db_importer {
 
 
 					String query = "insert into production_companies(id, name, location) values ('"  + id + "','" + company_name + "','" + country_code  + "');" ;
-					//toServer.executeUpdate(query);
-					System.out.println("inserted " + company_name + " into production_companies");
+					toServer.executeUpdate(query);
+					//System.out.println("inserted " + company_name + " into production_companies");
 					
 					try{
 						query = "insert into produced(mid, company_id) values ('"  + movie_id + "','" + id + "');" ;
 						toServer.executeUpdate(query);
+						
 					}catch(SQLException e){
 						System.out.println("error inserting into produced for " + movie_id + " and " + company_name);
 					}
