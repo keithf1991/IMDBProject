@@ -336,49 +336,52 @@ public class db_helper {
      * @param opening_day is a Date 
      */
     public void addMovie( String name, Vector<String[]> actorArr,
-                         Vector<String> directorsArr, Vector<String> producersArr,
-                         Vector<String> writersArr, int total_gross,
-                         int opening_weekend_gross, Date opening_day,
-                         Vector<String> production_companiesArr, String genre,
+                         Vector<String[]> directorsArr, Vector<String[]> producersArr,
+                         Vector<String[]> writersArr, String total_gross,
+                         String opening_weekend_gross, Date opening_day,
+                         Vector<String[]> production_companiesArr, String genre,
                          String rating, String plot, int runtime,
                          int production_year ){
         try{
-            String actors = "";
-            String thisActor[];
-            for( int i = 0; i < actorArr.size(); i++ ){
-                thisActor = actorArr.get(i);
-                actors += thisActor[0] + "," + thisActor[1] + "," + thisActor[2];
-                if( i < actorArr.size() - 1 ){
-                    actors += ";";
-                }
-            }
             
-            String opening_dayStr = (new SimpleDateFormat( "yyyy.MM.dd" )).format(opening_day);
+            String opening_dayStr = (new SimpleDateFormat( "yyyy MM dd" )).format(opening_day);
             
+            String actors = parseHelper( actorArr, 3 );
+            String directors = parseHelper( directorsArr, 2 );
+            String writers = parseHelper( writersArr, 2 );
+            String producers = parseHelper( producersArr, 2 );
+            String production_companies = parseHelper( production_companiesArr, 2 );
             
-            String directors = parseHelper( directorsArr );
-            String writers = parseHelper( writersArr );
-            String producers = parseHelper( producersArr );
-            String production_companies = parseHelper( production_companiesArr );
+            String theQuery = "SELECT * FROM create_movie(" + name + "," + actors +
+            "," + directors + "," + producers + "," + writers +
+            "," + total_gross + "," + opening_weekend_gross +
+            ", TO_DATE('" + opening_dayStr + "','YYYY Mon DD')" +
+            "," + production_companies + "," + genre + "," + rating +
+            "," + plot + "," + runtime + "," + production_year + ");";
             
-            stmt.executeQuery("SELECT * FROM create_movie(" + name + "," + actors +
-                              "," + directors + "," + producers + "," + writers +
-                              "," + total_gross + "," + opening_weekend_gross +
-                              ", TO_DATE('" + opening_dayStr + "','YYYY Mon DD')" +
-                              "," + production_companies + "," + genre + "," + rating +
-                              "," + plot + "," + runtime + "," + production_year + ");" );
+            System.out.println( theQuery );
+            
+            stmt.executeQuery( theQuery );
             
         }catch(SQLException e){
 			System.err.println("error adding movie\n" + e);
 		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
+			System.err.println("null pointer exception" );
+            d.printStackTrace();
 		}
         
     }
     
-    private String parseHelper( Vector<String> toParse ){
+    private String parseHelper( Vector<String[]> toParse, int strArrSize ){
         String toReturn = "";
         for( int i = 0; i < toParse.size(); i++ ){
+            String[] thisInner = toParse.get(i);
+            for( int inner = 0; inner < strArrSize; inner++ ){
+                toReturn += thisInner[inner];
+                if( inner < strArrSize - 1 ){
+                    toReturn += ",";
+                }
+            }
             toReturn += toParse.get(i);
             if( i < toParse.size() - 1 ){
                 toReturn += ";";
@@ -511,7 +514,37 @@ public class db_helper {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+        String name = "this will work";
+        
+        Vector<String[]> actors = new Vector<String[]>();
+        actors.add( new String[]{"actor", "m", "role"} );
+        actors.add( new String[]{"actor1", "f", "rol1"} );
+        
+        Vector<String[]> directors = new Vector<String[]>();
+        directors.add( new String[]{"director1 yeah", "m"} );
+        directors.add( new String[]{"director2 woot", "f"} );
 
+        Vector<String[]> producers = new Vector<String[]>();
+        producers.add( new String[]{"producer1 j", "m"} );
+        
+        Vector<String[]> writers = new Vector<String[]>();
+        writers.add( new String[]{"writer1 jkldfsj", "f"} );
+
+        String total_gross = "$43289032";
+        String opening_weekend_gross = "$9203";
+        
+        Date opening_day = new Date();
+        
+        Vector<String[]> production_companies = new Vector<String[]>();
+        production_companies.add( new String[]{"dfjslk;jfdksl", "behind you"} );
+
+        String genre = "THRILLA";
+        String rating = "NC-17";
+        String plot = "The quick brown fox jumped over the lazy dog";
+        int runtime = 340;
+        int production_year = 1984;
+        
+        
 		db_helper helper = new db_helper();
 	    System.out.println("connection success!");
 //		System.out.println("give me a query!");
@@ -519,6 +552,11 @@ public class db_helper {
 		String userInput = "";
 
 		
+        helper.addMovie( name, actors, directors, producers, writers, total_gross, opening_weekend_gross, opening_day,production_companies, genre, rating, plot, runtime, production_year );
+        
+        System.exit(0);
+
+        
 		InputStreamReader inReader = new InputStreamReader(System.in);
 		BufferedReader bReader = new BufferedReader( inReader );
 								
