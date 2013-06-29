@@ -35,7 +35,7 @@ public class db_helper {
 	 * dumps all movie data into string except for id
 	 * @return movie_names
 	 */
-	public Vector<movie> getMoviedata(String searchTitle){
+	public Vector<movie> getMovieData(String searchTitle){
 		Vector<movie> movie_data = new Vector<movie>();
 		System.out.println("querying " + searchTitle + " in movies" );
 		
@@ -70,6 +70,40 @@ public class db_helper {
 		return movie_data;
 	}
 	
+	/**
+	 * returns movie object of one movie hopefully
+	 * @return movie_names
+	 */
+	public movie getMovieDatabyID(String movie_id){
+		movie movie_data = new movie();
+		System.out.println("querying " + movie_id + " in movies" );
+		
+		String query = "select * from movie where mid is " + movie_id + ";";
+		
+		try {
+		
+			
+			ResultSet movies = stmt.executeQuery(query);
+			if(movies.next()){
+				//create temp movie object to store data
+				movie_data.setMid(Integer.parseInt(movies.getString("mid")));
+				movie_data.setTitle(movies.getString("title"));
+				movie_data.setGenre(movies.getString("genre"));
+				movie_data.setRuntime(Integer.parseInt(movies.getString("runtime")));
+				movie_data.setRating(movies.getString("rating"));
+				movie_data.setPlot(movies.getString("plot"));
+				movie_data.setProduction_year(Integer.parseInt(movies.getString("production_year")));
+				movie_data.setRelease_date(movies.getString("release_date"));
+				
+			}
+		}catch(SQLException e){
+			System.err.println("error getting movie names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d.getStackTrace());
+		}
+		
+		return movie_data;
+	}
 	/*
 	 * get people names when given a string query
 	 * @return movie_names

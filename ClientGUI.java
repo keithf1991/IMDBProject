@@ -24,7 +24,10 @@ public class ClientGUI implements ActionListener {
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
 	
-	JTable table = new JTable(13,13);
+	DefaultListModel listModel;
+	//listModel.addElement("no query");
+	JList table = new JList(listModel);
+	
 	
 	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
@@ -33,7 +36,7 @@ public class ClientGUI implements ActionListener {
 	
 	public ClientGUI() {
 		
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.setLocation(200,300);	
@@ -80,6 +83,8 @@ public class ClientGUI implements ActionListener {
 				try{
 					
 					String query = textField.getText();
+					String[] tmp_array;
+					
 					if (query.equalsIgnoreCase("") || query.equalsIgnoreCase(" ")) {
 						query = "nonsenseSearchTerm";
 					}	
@@ -93,82 +98,20 @@ public class ClientGUI implements ActionListener {
 					Vector<character> charResults = new Vector<character>();
 					charResults = db.getCharacterData(query);
 				
-				
-					Iterator itr = movieResults.iterator();
-				
-					int r = 0;
-					int c = 0;
-				
-					table.setValueAt("Movie ID:", r++ ,c);
-					table.setValueAt("Title:", r++ ,c);
-					table.setValueAt("Genre:", r++, c);
-					table.setValueAt("Rating:", r++, c);
-					table.setValueAt("Runtime:", r++, c);
-					table.setValueAt("Production Year:", r++, c);
-					table.setValueAt("Release Date:", r++, c);
-					table.setValueAt("Plot:", r++, c);
 					
-					r = 0;
-					c++;
+					//convert movie objects to just titles
+					Iterator itr = movieResults.iterator();
 					
 					while (itr.hasNext() ) {
 						movie tempMovie = new movie();
 						tempMovie = (movie)itr.next();
-						table.setValueAt(tempMovie.getMid(),r++,c);
-						table.setValueAt(tempMovie.getTitle(),r++,c);
-						table.setValueAt(tempMovie.getGenre(),r++,c);
-						table.setValueAt(tempMovie.getRating(),r++,c);
-						table.setValueAt(tempMovie.getRuntime(),r++,c);
-						table.setValueAt(tempMovie.getProduction_year(),r++,c);
-						table.setValueAt(tempMovie.getRelease_date(),r++,c);
-						table.setValueAt(tempMovie.getPlot(),r++,c);
 						
-						r = 0;
-						c++;
+						listModel.addElement(tempMovie.toString());
+						
+						
 					}
-					
-					r = 8;
-					c = 0;
-					
-					table.setValueAt("Person ID:", r++ ,c);
-					table.setValueAt("Name:", r++ ,c);
-					table.setValueAt("Gender:", r++, c);
-					
-					r = 8;
-					c++;
-					itr = peopleResults.iterator();
-					
-					while (itr.hasNext() ) {
-						person tempPerson = new person();
-						tempPerson = (person)itr.next();
-						table.setValueAt(tempPerson.getId(),r++,c);
-						table.setValueAt(tempPerson.getName(),r++,c);
-						table.setValueAt(tempPerson.getGender(),r++,c);
-						
-						r = 8;
-						c++;
-					}
-					
-					r = 11;
-					c = 0;
-					table.setValueAt("Role ID:", r++ ,c);
-					table.setValueAt("Name:", r++ ,c);
-					
-					c++;
-					r = 11;
-					itr = charResults.iterator();
-					
-					while (itr.hasNext() ) {
-						character tempChar = new character();
-						tempChar = (character)itr.next();
-						table.setValueAt(tempChar.getId(),r++,c);
-						table.setValueAt(tempChar.getName(),r++,c);
-						
-						
-						r = 11;
-						c++;
-					}
-					table.revalidate();
+
+										
 					
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					System.err.println("ArrayIndexOutOfBoundsException thrown");

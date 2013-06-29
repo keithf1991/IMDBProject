@@ -115,7 +115,9 @@ public class movie {
 		this.production_year = production_year;
 	}
 	
-	
+	@Override public String toString(){
+		return title;
+	}
 	
 	
 	
