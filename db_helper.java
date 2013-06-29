@@ -101,9 +101,12 @@ public class db_helper {
 		return people_names;
 	}
 	
-	/*
-	 * get people names when given a string query
-	 * @return movie_names
+	/**
+	 * 
+	 * searches character table for a name.  returns all data on names like the one passed in.
+	 * 
+	 * @param name
+	 * @return characterData
 	 */
 	public Vector<character> getCharacterData(String name){
 		Vector<character> characterData = new Vector<character>();
@@ -129,55 +132,63 @@ public class db_helper {
 		}
 		return characterData;
 	}
-	
-	/*
-	 * get box office data for a single movie
+		
+	/**
 	 * 
+	 * @param movie_id
+	 * @return 
 	 */
-	public String getBoxOfficeData(String movie_id){
-		String box_office = "";
+	public box_office getBoxOfficeData(String movie_id){
+		box_office BO = new box_office();
+		
 		System.out.println("querying " + movie_id + " in box_office");
 		
-		String query = "select BO.opening_gross_data,BO.total_gross from box_office as BO, opened as O where o.mid = " + movie_id +
+		String query = "select BO.id,BO.opening_gross_data,BO.total_gross from box_office as BO, opened as O where o.mid = " + movie_id +
 				" and O.bid = BO.id;";
 		
-		try {
-		
-			ResultSet results = stmt.executeQuery(query);
-			while(results.next()){
-				String owg = results.getString("opening_weekend_gross");
-				String tg = results.getString("total_gross");				
-				box_office = owg +"\t" + tg; 
-			}
-		}catch(SQLException e){
-			System.err.println("box office data for \n" + movie_id);
-		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
-		}
-		return box_office;
-	}	
-	
-	/*
-	 * get production companies for a single movie
-	 * 
-	 */
-	public Vector<String> getProductionCompaniesbyMovie(String movie_id){
-		Vector<String>  companies = new Vector<String>();
-		String line = "";
-		System.out.println("querying " + movie_id + " in production companies");
-		
-		String query = "select PC.id,PC.name from production_companies as PC, produced as P where P.mid = " + movie_id +
-				" and P.company_id = PC.id;";
 		
 		try {
 		
 			ResultSet results = stmt.executeQuery(query);
 			while(results.next()){
 				String id = results.getString("id");
-				String tg = results.getString("name");				
-				line = id +"\t" + tg;
+				String owg = results.getString("opening_weekend_gross");
+				String tg = results.getString("total_gross");				
+				BO = new box_office(Integer.parseInt(id),owg,tg);
+			}
+		}catch(SQLException e){
+			System.err.println("box office data for \n" + movie_id);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		
+
+		return BO;
+	}	
+	
+	/*
+	 * get production companies for a single movie
+	 * 
+	 */
+	public Vector<production_company> getProductionCompaniesbyMovie(String movie_id){
+		Vector<production_company>  companies = new Vector<production_company>();
+		String line = "";
+		System.out.println("querying " + movie_id + " in production companies");
+		
+		String query = "select PC.id,PC.name,PC.location from production_companies as PC, produced as P where P.mid = " + movie_id +
+				" and P.company_id = PC.id;";
+		
+		try {
+		
+			ResultSet results = stmt.executeQuery(query);
+			while(results.next()){
 				
-				companies.add(line);
+				String id = results.getString("id");
+				String tg = results.getString("name");	
+				String loc = results.getString("location");
+				production_company tmp_comp = new production_company(Integer.parseInt(id),tg,loc);
+				
+				companies.add(tmp_comp);
 			}
 		}catch(SQLException e){
 			System.err.println("production company data error for \n" + movie_id);
