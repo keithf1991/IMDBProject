@@ -22,9 +22,9 @@ public class ClientGUI implements ActionListener {
 	JButton delButton = new JButton("Delete");
 	
 	JButton searchButton = new JButton("Search");
-	JTextField textField = new JTextField("Search Field");
+	JTextField textField = new JTextField("");
 	
-	JTable table = new JTable(15,13);
+	JTable table = new JTable(13,15);
 	
 	JScrollPane scroll = new JScrollPane(table);
 	
@@ -79,70 +79,99 @@ public class ClientGUI implements ActionListener {
 				
 				try{
 					
-				String query = textField.getText();
-				
-				Vector<movie> movieResults = new Vector<movie>(); 
-				movieResults = db.getMoviedata(query);
-				
-				Vector<person> peopleResults = new Vector<person>();
-				peopleResults = db.getPeopleData(query);
-				
-				Iterator itr = movieResults.iterator();
-				
-				int r = 0;
-				int c = 0;
-				
-				table.setValueAt("Movie ID:", r ,c++);
-				table.setValueAt("Title:", r ,c++);
-				table.setValueAt("Genre:", r, c++);
-				table.setValueAt("Rating:", r, c++);
-				table.setValueAt("Runtime:", r, c++);
-				table.setValueAt("Production Year:", r, c++);
-				table.setValueAt("Release Date:", r, c++);
-				table.setValueAt("Plot", r, c++);
-				
-				r++;
-				c = 0;
-				
-				while (itr.hasNext() ) {
-					movie tempMovie = new movie();
-					tempMovie = (movie)itr.next();
-					table.setValueAt(tempMovie.getMid(),r,c++);
-					table.setValueAt(tempMovie.getTitle(),r,c++);
-					table.setValueAt(tempMovie.getGenre(),r,c++);
-					table.setValueAt(tempMovie.getRating(),r,c++);
-					table.setValueAt(tempMovie.getRuntime(),r,c++);
-					table.setValueAt(tempMovie.getProduction_year(),r,c++);
-					table.setValueAt(tempMovie.getRelease_date(),r,c++);
-					table.setValueAt(tempMovie.getPlot(),r,c++);
+					String query = textField.getText();
+					if (query.equalsIgnoreCase("") || query.equalsIgnoreCase(" ")) {
+						query = "nonsenseSearchTerm";
+					}	
 					
-					c = 0;
+					Vector<movie> movieResults = new Vector<movie>(); 
+					movieResults = db.getMoviedata(query);
+				
+					Vector<person> peopleResults = new Vector<person>();
+					peopleResults = db.getPeopleData(query);
+				
+					Vector<character> charResults = new Vector<character>();
+					charResults = db.getCharacterData(query);
+				
+				
+					Iterator itr = movieResults.iterator();
+				
+					int r = 0;
+					int c = 0;
+				
+					table.setValueAt("Movie ID:", r ,c++);
+					table.setValueAt("Title:", r ,c++);
+					table.setValueAt("Genre:", r, c++);
+					table.setValueAt("Rating:", r, c++);
+					table.setValueAt("Runtime:", r, c++);
+					table.setValueAt("Production Year:", r, c++);
+					table.setValueAt("Release Date:", r, c++);
+					table.setValueAt("Plot", r, c++);
+					
 					r++;
-				}
-				
-				r = 0;
-				c = 8;
-				
-				table.setValueAt("Person ID:", r ,c++);
-				table.setValueAt("Name:", r ,c++);
-				table.setValueAt("Gender:", r, c++);
-				
-				r++;
-				itr = peopleResults.iterator();
-				
-				while (itr.hasNext() ) {
-					person tempPerson = new person();
-					tempPerson = (person)itr.next();
-					table.setValueAt(tempPerson.getId(),r,c++);
-					table.setValueAt(tempPerson.getName(),r,c++);
-					table.setValueAt(tempPerson.getGender(),r,c++);
+					c = 0;
+					
+					while (itr.hasNext() ) {
+						movie tempMovie = new movie();
+						tempMovie = (movie)itr.next();
+						table.setValueAt(tempMovie.getMid(),r,c++);
+						table.setValueAt(tempMovie.getTitle(),r,c++);
+						table.setValueAt(tempMovie.getGenre(),r,c++);
+						table.setValueAt(tempMovie.getRating(),r,c++);
+						table.setValueAt(tempMovie.getRuntime(),r,c++);
+						table.setValueAt(tempMovie.getProduction_year(),r,c++);
+						table.setValueAt(tempMovie.getRelease_date(),r,c++);
+						table.setValueAt(tempMovie.getPlot(),r,c++);
+						
+						c = 0;
+						r++;
+					}
+					
+					r = 0;
+					c = 8;
+					
+					table.setValueAt("Person ID:", r ,c++);
+					table.setValueAt("Name:", r ,c++);
+					table.setValueAt("Gender:", r, c++);
 					
 					c = 8;
 					r++;
-				}
-				
-				table.revalidate();
-				
+					itr = peopleResults.iterator();
+					
+					
+					while (itr.hasNext() ) {
+						person tempPerson = new person();
+						tempPerson = (person)itr.next();
+						table.setValueAt(tempPerson.getId(),r,c++);
+						table.setValueAt(tempPerson.getName(),r,c++);
+						table.setValueAt(tempPerson.getGender(),r,c++);
+						
+						c = 8;
+						r++;
+					}
+					
+					c = 11;
+					r = 0;
+					table.setValueAt("Role ID:", r ,c++);
+					table.setValueAt("Name:", r ,c++);
+					
+					r++;
+					c = 11;
+					itr = charResults.iterator();
+					
+					while (itr.hasNext() ) {
+						character tempChar = new character();
+						tempChar = (character)itr.next();
+						table.setValueAt(tempChar.getId(),r,c++);
+						table.setValueAt(tempChar.getName(),r,c++);
+						
+						
+						c = 11;
+						r++;
+					}
+					
+					table.revalidate();
+					
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					System.err.println("ArrayIndexOutOfBoundsException thrown");
 				}
