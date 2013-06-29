@@ -3,6 +3,17 @@ public class character {
 
 	String name;
 	int id;
+	
+	public character(){
+		name = "";
+		id = (Integer) null;
+	}
+	
+	public character(int id, String name){
+		this.name = name;
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -16,6 +27,9 @@ public class character {
 		this.id = id;
 	}
 	
+	@Override public String toString(){
+		return name;
+	}
 	
 
 }

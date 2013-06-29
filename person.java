@@ -10,6 +10,13 @@ public class person {
 		
 		id = (Integer) null;
 	}
+	
+	public person(int id, String name, String gender){
+		this.name = name;
+		this.gender = gender;
+		
+		this.id = (Integer) id;
+	}
 
 	public String getName() {
 		return name;

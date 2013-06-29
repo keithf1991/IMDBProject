@@ -105,11 +105,11 @@ public class db_helper {
 	 * get people names when given a string query
 	 * @return movie_names
 	 */
-	public Vector<String> getCharacterData(String name){
-		Vector<String> char_names = new Vector<String>();
+	public Vector<character> getCharacterData(String name){
+		Vector<character> characterData = new Vector<character>();
 		System.out.println("querying " + name + " in characters ");
 		
-		String query = "select name from characters where name like '%" + name + "%';";
+		String query = "select id,name from characters where name like '%" + name + "%';";
 		
 		try {
 		
@@ -117,15 +117,17 @@ public class db_helper {
 			ResultSet people = stmt.executeQuery(query);
 			//System.out.println("got people names");
 			while(people.next()){
-				String t = people.getString("name");
-				char_names.add(t);
+				character tmp_char = new character();
+				tmp_char.setId(Integer.parseInt(people.getString("id")));
+				tmp_char.setName(people.getString("name"));
+				characterData.add(tmp_char);
 			}
 		}catch(SQLException e){
 			System.err.println("error getting character names\n" + e);
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
 		}
-		return char_names;
+		return characterData;
 	}
 	
 	/*
@@ -568,7 +570,7 @@ public class db_helper {
 						
 						//get character results on query
 						
-						Vector<String> char_query_results= helper.getCharacterData(query);	    
+						/*Vector<String> char_query_results= helper.getCharacterData(query);	    
 						if(char_query_results != null){
 							
 							Enumeration<String> listy = char_query_results.elements();
@@ -580,7 +582,7 @@ public class db_helper {
 								String peopleString = listy.nextElement();
 								System.out.println(peopleString);
 							}	    
-						}
+						}*/
 				}	
 				if (userInput.equals("c") || userInput.equals("C"))
 				{
