@@ -71,36 +71,6 @@ public class db_helper {
 	}
 	
 	/*
-	 * get movie names when given a string query
-	 * @return movie_names
-	 */
-	public Vector<String> getMovieNamesbyTitle(String searchTitle){
-		Vector<String> movie_names = new Vector<String>();
-		System.out.println("querying " + searchTitle + " in movies");
-		
-		String query = "select title from movie where title like '%" + searchTitle + "%';";
-		
-		//S/ystem.out.println("created query for SQL");
-		try {
-			//System.out.println("query: " + query);
-			
-			ResultSet movies = stmt.executeQuery(query);
-			System.out.println("got movie names");
-			while(movies.next()){
-				String t = movies.getString("title");
-				movie_names.add(t);
-			}
-		}catch(SQLException e){
-			System.err.println("error getting movie names\n" + e);
-		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
-		}
-		
-		return movie_names;
-	}
-	
-	
-	/*
 	 * get people names when given a string query
 	 * @return movie_names
 	 */
@@ -111,7 +81,6 @@ public class db_helper {
 		String query = "select id,name,gender from person where name like '%" + name + "%';";
 		
 		try {
-		
 			
 			ResultSet people = stmt.executeQuery(query);
 			System.out.println("got people names");
