@@ -86,7 +86,7 @@ public class db_helper {
 			System.out.println("got people names");
 			while(people.next()){
 				person tmp_person = new person();
-				tmp_person.setId(Integer.parseInt(people.getString("id")));
+				tmp_person.setId(Integer.parseInt(people.getString("pid")));
 				tmp_person.setName(people.getString("name"));
 				
 				tmp_person.setGender(people.getString("gender"));
@@ -118,7 +118,7 @@ public class db_helper {
 			//System.out.println("got people names");
 			while(people.next()){
 				character tmp_char = new character();
-				tmp_char.setId(Integer.parseInt(people.getString("id")));
+				tmp_char.setId(Integer.parseInt(people.getString("rid")));
 				tmp_char.setName(people.getString("name"));
 				characterData.add(tmp_char);
 			}
