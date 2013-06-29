@@ -352,12 +352,12 @@ public class db_helper {
             String producers = parseHelper( producersArr, 2 );
             String production_companies = parseHelper( production_companiesArr, 2 );
             
-            String theQuery = "SELECT * FROM create_movie(" + name + "," + actors +
-            "," + directors + "," + producers + "," + writers +
-            "," + total_gross + "," + opening_weekend_gross +
-            ", TO_DATE('" + opening_dayStr + "','YYYY Mon DD')" +
-            "," + production_companies + "," + genre + "," + rating +
-            "," + plot + "," + runtime + "," + production_year + ");";
+            String theQuery = "SELECT * FROM create_movie('" + name + "','" + actors +
+            "','" + directors + "','" + producers + "','" + writers +
+            "','" + total_gross + "','" + opening_weekend_gross +
+            "', TO_DATE('" + opening_dayStr + "','YYYY MM DD')" +
+            ",'" + production_companies + "','" + genre + "','" + rating +
+            "','" + plot + "'," + runtime + "," + production_year + ");";
             
             System.out.println( theQuery );
             
@@ -377,12 +377,11 @@ public class db_helper {
         for( int i = 0; i < toParse.size(); i++ ){
             String[] thisInner = toParse.get(i);
             for( int inner = 0; inner < strArrSize; inner++ ){
-                toReturn += thisInner[inner];
+                toReturn += "" + thisInner[inner] + "";
                 if( inner < strArrSize - 1 ){
                     toReturn += ",";
                 }
             }
-            toReturn += toParse.get(i);
             if( i < toParse.size() - 1 ){
                 toReturn += ";";
             }
