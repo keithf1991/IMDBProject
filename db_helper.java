@@ -99,41 +99,16 @@ public class db_helper {
 		return movie_names;
 	}
 	
-	/*
-	 * get movie names when given a string query
-	 * @return movie_names
-	 */
-	public Vector<String> getPeopleNamesbyNames(String name){
-		Vector<String> people_names = new Vector<String>();
-		System.out.println("querying " + name + " in people");
-		
-		String query = "select name from person where name like '%" + name + "%';";
-		
-		try {
-		
-			
-			ResultSet people = stmt.executeQuery(query);
-			while(people.next()){
-				String t = people.getString("name");
-				people_names.add(t);
-			}
-		}catch(SQLException e){
-			System.err.println("error getting movie names\n" + e);
-		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
-		}
-		return people_names;
-	}
 	
 	/*
 	 * get people names when given a string query
 	 * @return movie_names
 	 */
-	public Vector<String> getPeopleData(String name){
-		Vector<String> people_names = new Vector<String>();
+	public Vector<person> getPeopleData(String name){
+		Vector<person> people_names = new Vector<person>();
 		System.out.println("querying " + name + " in people" );
 		
-		String query = "select name,gender from person where name like '%" + name + "%';";
+		String query = "select id,name,gender from person where name like '%" + name + "%';";
 		
 		try {
 		
@@ -141,10 +116,13 @@ public class db_helper {
 			ResultSet people = stmt.executeQuery(query);
 			System.out.println("got people names");
 			while(people.next()){
-				String t = people.getString("name");
-				String g = people.getString("gender");
-				String name_string = t + "\t" + g;
-				people_names.add(name_string);
+				person tmp_person = new person();
+				tmp_person.setId(Integer.parseInt(people.getString("id")));
+				tmp_person.setName(people.getString("name"));
+				
+				tmp_person.setGender(people.getString("gender"));
+				
+				people_names.add(tmp_person);
 			}
 		}catch(SQLException e){
 			System.err.println("error getting people names\n" + e);
@@ -605,7 +583,7 @@ public class db_helper {
 						}*/
 						//get people results on query
 
-						Vector<String> people_query_results= helper.getPeopleData(query);	    
+						/*Vector<String> people_query_results= helper.getPeopleData(query);	    
 						if(people_query_results != null){
 							
 							Enumeration<String> listy = people_query_results.elements();
@@ -617,7 +595,7 @@ public class db_helper {
 								String peopleString = listy.nextElement();
 								System.out.println(peopleString);
 							}	    
-						}    
+						}  */  
 						
 						//get character results on query
 						
