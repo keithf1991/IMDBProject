@@ -22,10 +22,13 @@ public class ClientGUI implements ActionListener {
 	JButton delButton = new JButton("Delete");
 	
 	JButton searchButton = new JButton("Search");
-	
 	JTextField textField = new JTextField("Search Field");
-	JTable table = new JTable(12,8);
-	Vector<String> results = new Vector<String>();
+	
+	JTable table = new JTable(15,13);
+	
+	JScrollPane scroll = new JScrollPane(table);
+	
+	//Vector<String> results = new Vector<String>();
 	db_helper db = new db_helper();
 	
 	public ClientGUI() {
@@ -33,7 +36,7 @@ public class ClientGUI implements ActionListener {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.setLocation(400,300);	
+		win.setLocation(200,300);	
 	
 		win.add(menuPanel, BorderLayout.NORTH);
 		win.add(searchPanel, BorderLayout.WEST);
@@ -77,8 +80,13 @@ public class ClientGUI implements ActionListener {
 				try{
 					
 				String query = textField.getText();
+				
 				Vector<movie> movieResults = new Vector<movie>(); 
 				movieResults = db.getMoviedata(query);
+				
+				Vector<person> peopleResults = new Vector<person>();
+				peopleResults = db.getPeopleData(query);
+				
 				Iterator itr = movieResults.iterator();
 				
 				int r = 0;
@@ -93,6 +101,8 @@ public class ClientGUI implements ActionListener {
 				table.setValueAt("Release Date:", r, c++);
 				table.setValueAt("Plot", r, c++);
 				
+				r++;
+				c = 0;
 				
 				while (itr.hasNext() ) {
 					movie tempMovie = new movie();
@@ -107,20 +117,30 @@ public class ClientGUI implements ActionListener {
 					table.setValueAt(tempMovie.getPlot(),r,c++);
 					
 					c = 0;
-				}
-				
-				r++;
-				c = 1;
-				//results = db.getPeopleData(query);
-				//itr = results.iterator();
-				
-				/*
-				while (itr.hasNext() ) {
-					
-					table.setValueAt(itr.next(),r,c);
 					r++;
 				}
-				*/
+				
+				r = 0;
+				c = 8;
+				
+				table.setValueAt("Person ID:", r ,c++);
+				table.setValueAt("Name:", r ,c++);
+				table.setValueAt("Gender:", r, c++);
+				
+				r++;
+				itr = peopleResults.iterator();
+				
+				while (itr.hasNext() ) {
+					person tempPerson = new person();
+					tempPerson = (person)itr.next();
+					table.setValueAt(tempPerson.getId(),r,c++);
+					table.setValueAt(tempPerson.getName(),r,c++);
+					table.setValueAt(tempPerson.getGender(),r,c++);
+					
+					c = 8;
+					r++;
+				}
+				
 				table.revalidate();
 				
 				} catch (ArrayIndexOutOfBoundsException ex) {
