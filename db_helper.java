@@ -331,12 +331,11 @@ public class db_helper {
 	 * @return 
 	 */
 	public box_office getBoxOfficeData(String movie_id){
-		box_office BO = new box_office();
+		box_office tmpBox = new box_office();
 		
 		System.out.println("querying " + movie_id + " in box_office");
 		
-		String query = "select BO.id,BO.opening_gross_data,BO.total_gross from box_office as BO, opened as O where o.mid = " + movie_id +
-				" and O.bid = BO.id;";
+		String query = "select BO.id,BO.opening_weekend_gross,BO.total_gross from box_office as BO, opened as O where o.mid = " + movie_id +" and O.bid = BO.id;";
 		
 		
 		try {
@@ -346,16 +345,16 @@ public class db_helper {
 				String id = results.getString("id");
 				String owg = results.getString("opening_weekend_gross");
 				String tg = results.getString("total_gross");				
-				BO = new box_office(Integer.parseInt(id),owg,tg);
+				tmpBox = new box_office(Integer.parseInt(id),owg,tg);
 			}
 		}catch(SQLException e){
-			System.err.println("box office data for \n" + movie_id);
+			System.err.println("SQL error for box office data for \n" + movie_id);
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
 		}
 		
 
-		return BO;
+		return tmpBox;
 	}	
 	
 /**

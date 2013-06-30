@@ -7,7 +7,7 @@ import java.util.Vector;
 import java.util.Iterator;
 
 
-public class ClientGUI implements ActionListener,KeyListener {
+public class AdminGUI implements ActionListener,KeyListener {
 
 	/**
 	 * @param args
@@ -38,7 +38,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 	//Vector<String> results = new Vector<String>();
 	db_helper db = new db_helper();
 	
-	public ClientGUI() {
+	public AdminGUI() {
 		
 		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
