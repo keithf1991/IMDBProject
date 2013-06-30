@@ -37,10 +37,10 @@ public class db_helper {
 	 */
 	public Vector<movie> getMovieData(String searchTitle){
 		Vector<movie> movie_data = new Vector<movie>();
-		System.out.println("querying " + searchTitle + " in movies" );
+		System.out.println("querying title:" + searchTitle + " in movies" );
 		
 		String query = "select * from movie where title like '%" + searchTitle + "%';";
-		
+		//String query = "select * from movie;";
 		//S/ystem.out.println("created query for SQL");
 		try {
 			//System.out.println("query: " + query);
@@ -50,21 +50,42 @@ public class db_helper {
 				//create temp movie object to store data
 				movie tmp_movie = new movie();
 				
+				String runtime = null;
+				
+				
+				
 				tmp_movie.setMid(Integer.parseInt(movies.getString("mid")));
-				tmp_movie.setTitle(movies.getString("title"));
+				String title = movies.getString("title");
+				System.out.println("working on movie " + title);
+				tmp_movie.setTitle(title);
 				tmp_movie.setGenre(movies.getString("genre"));
-				tmp_movie.setRuntime(Integer.parseInt(movies.getString("runtime")));
+				System.out.println("got genre");
+				runtime = movies.getString("runtime");
+				System.out.println("got runtime of " + runtime);
+				if(!(runtime == null)){
+					tmp_movie.setRuntime(Integer.parseInt(runtime));
+				}
+				
+				System.out.println("got runtime");
 				tmp_movie.setRating(movies.getString("rating"));
+				System.out.println("got rating");
 				tmp_movie.setPlot(movies.getString("plot"));
-				tmp_movie.setProduction_year(Integer.parseInt(movies.getString("production_year")));
+				System.out.println("got plot");
+				String prod_year = movies.getString("production_year");
+				if(!(prod_year == null)){
+					System.out.println("we are here");
+					tmp_movie.setProduction_year(Integer.parseInt(prod_year));
+				}
+				System.out.println("got production year of " + prod_year);
 				tmp_movie.setRelease_date(movies.getString("release_date"));
 				
 				movie_data.add(tmp_movie);
+				
 			}
 		}catch(SQLException e){
 			System.err.println("error getting movie names\n" + e);
 		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d.getStackTrace());
+			System.err.println("null pointer exception getting movies" + d);
 		}
 		
 		return movie_data;
@@ -130,7 +151,7 @@ public class db_helper {
 		}catch(SQLException e){
 			System.err.println("error getting people names\n" + e);
 		}catch(NullPointerException d){
-			System.err.println("null pointer exception" + d);
+			System.err.println("null pointer exception while getting people names" + d);
 		}
 		return people_names;
 	}
@@ -233,6 +254,40 @@ public class db_helper {
 		
 		return companies;
 	}	
+	
+	/**
+	 * returns list of production companies by name
+	 * @param movie_id
+	 * @return companies
+	 */
+	public Vector<production_company> getProductionCompaniesbyName(String company_name){
+		Vector<production_company>  companies = new Vector<production_company>();
+		System.out.println("querying " + company_name + " in production companies");
+		
+		String query = "select * from production_companies where name like '%" + company_name +"%';";
+		
+		try {
+		
+			ResultSet results = stmt.executeQuery(query);
+			while(results.next()){
+				String id = results.getString("id");
+				String tg = results.getString("name");	
+				String loc = results.getString("location");
+				production_company tmp_comp = new production_company(Integer.parseInt(id),tg,loc);
+				
+				companies.add(tmp_comp);
+			}
+		}catch(SQLException e){
+			System.err.println("production company data error for \n" + company_name);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception getting production company by name" + d);
+		}
+		
+		return companies;
+	}	
+	
+	
+	
 	
 
 	//lets create a table

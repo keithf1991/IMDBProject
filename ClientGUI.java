@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.util.Vector;
 import java.util.Iterator;
 
 
-public class ClientGUI implements ActionListener {
+public class ClientGUI implements ActionListener,KeyListener {
 
 	/**
 	 * @param args
@@ -26,10 +28,12 @@ public class ClientGUI implements ActionListener {
 	
 	DefaultListModel listModel;
 	//listModel.addElement("no query");
-	JList table = new JList(listModel);
+	JList table = new JList();
 	
 	
 	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	
+
 	
 	//Vector<String> results = new Vector<String>();
 	db_helper db = new db_helper();
@@ -40,6 +44,7 @@ public class ClientGUI implements ActionListener {
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.setLocation(200,300);	
+		win.setSize(1280, 800);
 	
 		win.add(menuPanel, BorderLayout.NORTH);
 		win.add(searchPanel, BorderLayout.WEST);
@@ -56,7 +61,8 @@ public class ClientGUI implements ActionListener {
 	
 		searchPanel.add(textField);
 		searchPanel.add(searchButton);	
-		displayPanel.add(table);
+		//searchPanel.addKeyListener(this);
+		displayPanel.add(new JScrollPane(table));
 	
 		retButton.addActionListener(this);
 		crButton.addActionListener(this);
@@ -64,15 +70,25 @@ public class ClientGUI implements ActionListener {
 		delButton.addActionListener(this);
 	
 		searchButton.addActionListener(this);
+		searchButton.addKeyListener(this);
+		
+		textField.addKeyListener(this);
+		
+		
+
 	
-		win.pack();
+		//win.pack();
 		win.setVisible(true);
+		textField.requestFocusInWindow();
 		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+	
 		if (e.getSource() instanceof JButton) {
 			JButton clickedButton = (JButton)e.getSource();
+			
+			
 			
 			if (clickedButton.equals(retButton)) {
 				
@@ -88,29 +104,70 @@ public class ClientGUI implements ActionListener {
 					if (query.equalsIgnoreCase("") || query.equalsIgnoreCase(" ")) {
 						query = "nonsenseSearchTerm";
 					}	
+					listModel = new DefaultListModel<String>();
 					
 					Vector<movie> movieResults = new Vector<movie>(); 
-					movieResults = db.getMoviedata(query);
+					movieResults = db.getMovieData(query);
 				
 					Vector<person> peopleResults = new Vector<person>();
 					peopleResults = db.getPeopleData(query);
 				
 					Vector<character> charResults = new Vector<character>();
 					charResults = db.getCharacterData(query);
+					
+					Vector<production_company> prodResults = new Vector<production_company>();
+					prodResults = db.getProductionCompaniesbyName(query);
 				
 					
 					//convert movie objects to just titles
 					Iterator itr = movieResults.iterator();
-					
+					listModel.addElement("MOVIES ");
 					while (itr.hasNext() ) {
 						movie tempMovie = new movie();
 						tempMovie = (movie)itr.next();
 						
-						listModel.addElement(tempMovie.toString());
+						listModel.addElement(" " + tempMovie.toString());
 						
 						
 					}
+					listModel.addElement(" ");
+					listModel.addElement("PEOPLE");
+					itr = peopleResults.iterator();
+					while (itr.hasNext() ) {
+						person tempPerson = new person();
+						tempPerson = (person)itr.next();
+						
+						listModel.addElement(" " + tempPerson.toString());
+						
+						
+					}
+					
+					listModel.addElement(" ");
+					listModel.addElement("CHARACTER");
+					itr = charResults.iterator();
+					while (itr.hasNext() ) {
+						character tempPerson = new character();
+						tempPerson = (character)itr.next();
+						
+						listModel.addElement(" " + tempPerson.toString());
+						
+						
+					}
+					
+					listModel.addElement(" ");
+					listModel.addElement("COMPANIES");
+					itr = prodResults.iterator();
+					while (itr.hasNext() ) {
+						production_company tmpComp = new production_company();
+						tmpComp = (production_company)itr.next();
+						
+						listModel.addElement(" " + tmpComp.toString());
 
+					}
+
+					
+					table.setModel(listModel);
+					
 										
 					
 				} catch (ArrayIndexOutOfBoundsException ex) {
@@ -139,6 +196,38 @@ public class ClientGUI implements ActionListener {
 
 	ClientGUI client = new ClientGUI();
 	
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			
+			System.out.println("ENTER BEING PRESSED");
+			searchButton.doClick();
+		}
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			
+			System.out.println("ENTER BEING PRESSED");
+			searchButton.doClick();
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			
+			System.out.println("ENTER BEING PRESSED");
+			searchButton.doClick();
+		}
 	}
 
 }

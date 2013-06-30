@@ -38,5 +38,9 @@ public class production_company{
 		this.location = location;
 	}
 	
+	@Override public String toString(){
+		return name;
+	}
+	
 	
 }
