@@ -439,6 +439,36 @@ public class db_helper {
 		return companies;
 	}	
 	
+	/**
+	 * returns data on production company
+	 * @param movie_id
+	 * @return companies
+	 */
+	public production_company getProductionCompaniesbyID(String company_id){
+		production_company  comp = new production_company();
+		System.out.println("querying " + company_id + " in production companies");
+		
+		String query = "select * from production_companies where id = '" + company_id +"';";
+		
+		try {
+		
+			ResultSet results = stmt.executeQuery(query);
+			while(results.next()){
+				String id = results.getString("id");
+				String tg = results.getString("name");	
+				String loc = results.getString("location");
+				comp = new production_company(Integer.parseInt(id),tg,loc);
+				
+				
+			}
+		}catch(SQLException e){
+			System.err.println("production company data error for \n" + company_id);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception getting production company by name" + d);
+		}
+		
+		return comp;
+	}	
 	
 	
 	
@@ -591,7 +621,7 @@ public class db_helper {
         String col = "";
         if(table.equals("movie")){
         	col = "mid";
-        }else if (table.equals("people")){
+        }else if (table.equals("person")){
         	col = "pid";
         }else if (table.equals("characters")){
         	col = "rid";

@@ -335,12 +335,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		//popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		JPanel p1 = new JPanel();
-		
 		JPanel p2 = new JPanel();
-		
-		//p2.setLayout(new FlowLayout());
-		
-		
+			
 		SpringLayout layout = new SpringLayout();
 		
 		JLabel tmpLabel = new JLabel("tmp");
@@ -358,7 +354,6 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			movie tmov = db.getMovieDatabyID(id);
 			//set title of popup
 			popup.setTitle(tmov.getTitle());
-					
 			
 			JTextField movieTitle = new JTextField(tmov.getTitle());
 			JTextField genre = new JTextField(tmov.getGenre());
@@ -368,8 +363,6 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			JTextField totalGross = new JTextField(tbox.getTotal_gross() );
 			JTextField openingWeekend = new JTextField(tbox.getOpening_weekend() );
 			JTextField release = new JTextField(tmov.getRelease_date());
-			
-			
 			
 			p1.add(new JLabel("Movie ID:"));
 			p1.add(new JLabel(""));
@@ -412,27 +405,33 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			popup.setVisible(true);
 			
 		} else if (type == 'p') {
-			popup.add(p1, BorderLayout.NORTH);
-			popup.add(p2, BorderLayout.CENTER);
+			popup.setLayout(new BorderLayout());
 
+			p1.setLayout(new GridLayout(12, 1));
+			p2.setLayout(new GridLayout(1,2));
+			
+			
+			//get people data
 			person tmpPerson = new person();
 			tmpPerson = db.getPeopleDataByID(id);
-			p1.add(new JLabel("Person ID: " + tmpPerson.getId()));
-			popup.add(p1, BorderLayout.NORTH);
-			popup.add(p2, BorderLayout.CENTER);
-
-
+			
+			
+			JTextField name = new JTextField(tmpPerson.getName());
+			JTextField gender = new JTextField(tmpPerson.getGender());
+			
 			popup.setTitle(tmpPerson.getName() );
 			
-			p1.add(new JLabel("    Gender: " + tmpPerson.getGender() ) );
+			p1.add(new JLabel("Person ID: " + tmpPerson.getId()));
+			p1.add(new JLabel(""));
+			p1.add(new JLabel("Name: "));
+			p1.add(name);
+			p1.add(new JLabel("Gender: " ) );
+			p1.add(gender);
 
-			Vector<String> accomp = db.getPersonAccomplistments(id);
-			
-			JList plotLabel = new JList(accomp);
-			
-
-			popup.add(plotLabel);
-			popup.add(new JScrollPane(plotLabel));
+			popup.add(p1, BorderLayout.CENTER);
+			p2.add(saveButton);
+			p2.add(deleteButton);
+			popup.add(p2, BorderLayout.SOUTH);
 			
 			popup.setPreferredSize(new Dimension(900, 400));
 			popup.pack();
@@ -440,24 +439,69 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			popup.setVisible(true);
 			
 		} else if (type == 'c') {
-			popup.add(p1, BorderLayout.NORTH);
-			popup.add(p2, BorderLayout.CENTER);
+			popup.setLayout(new BorderLayout());
 
-			character tmpChar = new character();
-			tmpChar = db.getCharacterDataByID(id);
-			p1.add(new JLabel("Character ID: " + tmpChar.getId()));
-			popup.add(p1, BorderLayout.NORTH);
-			popup.add(p2, BorderLayout.CENTER);
-
-
-			popup.setTitle(tmpChar.getName() );
+			p1.setLayout(new GridLayout(12, 1));
+			p2.setLayout(new GridLayout(1,2));
+			
+			
+			//get people data
+			character tmpPerson = new character();
+			tmpPerson = db.getCharacterDataByID(id);
+			
+			
+			JTextField name = new JTextField(tmpPerson.getName());
+			
+			
+			popup.setTitle(tmpPerson.getName() );
+			
+			p1.add(new JLabel("Character ID: " + tmpPerson.getId()));
+			p1.add(new JLabel(""));
+			p1.add(new JLabel("Name: "));
+			p1.add(name);
+			popup.add(p1, BorderLayout.CENTER);
+			
+			p2.add(saveButton);
+			p2.add(deleteButton);
+			popup.add(p2, BorderLayout.SOUTH);
 			
 			popup.setPreferredSize(new Dimension(900, 400));
 			popup.pack();
 			
 			popup.setVisible(true);
 		} else if (type == 's') {
+			popup.setLayout(new BorderLayout());
+
+			p1.setLayout(new GridLayout(12, 1));
+			p2.setLayout(new GridLayout(1,2));
 			
+			
+			//get people data
+			production_company tmpComp = new production_company();
+			tmpComp = db.getProductionCompaniesbyID(id);
+			
+			
+			JTextField name = new JTextField(tmpComp.getName());
+			JTextField loc = new JTextField(tmpComp.getLocation());
+			
+			popup.setTitle(tmpComp.getName() );
+			
+			p1.add(new JLabel("Company ID: " + tmpComp.getId()));
+			p1.add(new JLabel(""));
+			p1.add(new JLabel("Name: "));
+			p1.add(name);
+			p1.add(new JLabel("Location: "));
+			p1.add(loc);
+			popup.add(p1, BorderLayout.CENTER);
+			
+			p2.add(saveButton);
+			p2.add(deleteButton);
+			popup.add(p2, BorderLayout.SOUTH);
+			
+			popup.setPreferredSize(new Dimension(900, 400));
+			popup.pack();
+			
+			popup.setVisible(true);			
 		}
 		
 		popup.setVisible(true);
