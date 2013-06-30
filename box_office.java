@@ -49,7 +49,6 @@ public class box_office{
 
 
 	public box_office(Integer id, String opening_weekend, String total_gross) {
-		super();
 		this.id = id;
 		this.opening_weekend = opening_weekend;
 		this.total_gross = total_gross;

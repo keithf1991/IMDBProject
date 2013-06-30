@@ -43,8 +43,8 @@ public class ClientGUI implements ActionListener,KeyListener {
 		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.setLocation(200,300);	
-		win.setSize(1280, 800);
+		win.setLocation(100,100);	
+		win.setSize(600, 600);
 	
 		win.add(menuPanel, BorderLayout.NORTH);
 		win.add(searchPanel, BorderLayout.WEST);
@@ -108,7 +108,9 @@ public class ClientGUI implements ActionListener,KeyListener {
 			
 			
 			if (clickedButton.equals(retButton)) {
-				
+				searchPanel.setVisible(true);
+				displayPanel.setVisible(true);
+				win.repaint();
 			}
 			
 			if (clickedButton.equals(searchButton)) {
@@ -200,15 +202,21 @@ public class ClientGUI implements ActionListener,KeyListener {
 			}
 			
 			if (clickedButton.equals(crButton)) {
-				//textLabel.setText("Not implemented");
+				searchPanel.setVisible(false);
+				displayPanel.setVisible(false);
+				win.repaint();
 			}
 			
 			if (clickedButton.equals(upButton)) {
-				//textLabel.setText("Not implemented");
+				searchPanel.setVisible(false);
+				displayPanel.setVisible(false);
+				win.repaint();
 			}
 			
 			if (clickedButton.equals(delButton)) {
-				//textLabel.setText("Not implemented");
+				searchPanel.setVisible(false);
+				displayPanel.setVisible(false);
+				win.repaint();
 			}
 		
 		}
@@ -252,9 +260,113 @@ public class ClientGUI implements ActionListener,KeyListener {
 	
 	public void createDialog(Object z){
 		String data = z.toString();
-		String id = data.substring(0,data.length()-2);
-		char type = data.charAt(data.length()-1);
+		String id = data.substring(0,data.length()-1);
+		char type = data.charAt(data.length() -1 );
 		
+		System.out.println("ID: "+id);
+		
+		JFrame popup = new JFrame();
+		popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		JPanel p1 = new JPanel();
+		JPanel p2 = new JPanel();
+		
+		p2.setLayout(new FlowLayout());
+		p1.setLayout(new FlowLayout());
+		//p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
+		
+		if (type == 'm') {
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+
+			box_office tbox = db.getBoxOfficeData(id);
+			movie tmov = new movie();
+			tmov = db.getMovieDatabyID(id);
+			popup.setTitle(tmov.getTitle() );
+			
+			p1.add(new JLabel("Movie ID: " + tmov.getMid() ) );
+			//popup.add(new JLabel("Title: " + tmov.getTitle() ) );
+			p1.add(new JLabel("    Genre: " + tmov.getGenre() ) );
+			p1.add(new JLabel("    Rating: " + tmov.getRating() ) );
+			p1.add(new JLabel("    Runtime: " + tmov.getRuntime() ) );
+			p1.add(new JLabel("    Production Year: " + tmov.getProduction_year() ) );
+			p1.add(new JLabel("    Release Date: " + tmov.getRelease_date() ) );
+			
+			p2.add(new JLabel("    Opening Weekend Gross: " + tbox.getOpening_weekend() ) );
+			p2.add(new JLabel("    Total Gross: " + tbox.getTotal_gross() ) );
+			
+			String plot = tmov.getPlot();
+			if(plot == null){
+				JTextArea plotLabel = new JTextArea("Plot not avaiable");
+				plotLabel.setEditable(false);
+				plotLabel.setLineWrap(true);
+				popup.add(new JScrollPane(plotLabel));
+				popup.add(plotLabel);
+			}else{
+				JTextArea plotLabel = new JTextArea(tmov.getPlot());
+				plotLabel.setEditable(false);
+				plotLabel.setLineWrap(true);
+				popup.add(new JScrollPane(plotLabel));
+				popup.add(plotLabel);
+			}
+
+			popup.setPreferredSize(new Dimension(900, 400));
+			popup.pack();
+			
+			popup.setVisible(true);
+			
+		} else if (type == 'p') {
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+			person tmpPerson = new person();
+			tmpPerson = db.getPeopleDataByID(id);
+			p1.add(new JLabel("Person ID: " + tmpPerson.getId()));
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+
+			popup.setTitle(tmpPerson.getName() );
+			
+			p1.add(new JLabel("    Gender: " + tmpPerson.getGender() ) );
+
+			Vector<String> accomp = db.getPersonAccomplistments(id);
+			
+			JList plotLabel = new JList(accomp);
+			
+
+			popup.add(plotLabel);
+			popup.add(new JScrollPane(plotLabel));
+			
+			popup.setPreferredSize(new Dimension(900, 400));
+			popup.pack();
+			
+			popup.setVisible(true);
+			
+		} else if (type == 'c') {
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+			character tmpChar = new character();
+			tmpChar = db.getCharacterDataByID(id);
+			p1.add(new JLabel("Character ID: " + tmpChar.getId()));
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+
+			popup.setTitle(tmpChar.getName() );
+			
+			popup.setPreferredSize(new Dimension(900, 400));
+			popup.pack();
+			
+			popup.setVisible(true);
+		} else if (type == 's') {
+			
+		}
+		
+		popup.setVisible(true);
+		popup.pack();
 		
 	}
 }

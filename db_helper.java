@@ -99,16 +99,25 @@ public class db_helper {
 		movie movie_data = new movie();
 		System.out.println("querying " + movie_id + " in movies" );
 		
-		String query = "select * from movie where mid is " + movie_id + ";";
+		String query = "select * from movie where mid = " + movie_id + ";";
 		
 		try {
 		
 			
 			ResultSet movies = stmt.executeQuery(query);
+			
+			/*check length of result set*/
+			
+			
 			if(movies.next()){
+				System.out.println("setting data in movie object");
 				//create temp movie object to store data
-				movie_data.setMid(Integer.parseInt(movies.getString("mid")));
-				movie_data.setTitle(movies.getString("title"));
+				movie_data.setMid(Integer.parseInt(movie_id));
+				
+				String title = movies.getString("title");
+				System.out.println("title of movie retrieving is " + title);
+				movie_data.setTitle(title);
+				
 				movie_data.setGenre(movies.getString("genre"));
 				movie_data.setRuntime(Integer.parseInt(movies.getString("runtime")));
 				movie_data.setRating(movies.getString("rating"));
@@ -156,6 +165,37 @@ public class db_helper {
 		return people_names;
 	}
 	
+	
+	/**
+	 * get people names when given a string query
+	 * @return movie_names
+	 */
+	public person getPeopleDataByID(String movie_id){
+		person personData = new person();
+		System.out.println("querying " + movie_id + " in people" );
+		
+		String query = "select pid,name,gender from person where pid = " + movie_id + ";";
+		
+		try {
+			
+			ResultSet people = stmt.executeQuery(query);
+			
+			if(people.next()){
+				
+				personData.setId(Integer.parseInt(movie_id));
+				personData.setName(people.getString("name"));
+				
+				personData.setGender(people.getString("gender"));
+				
+				
+			}
+		}catch(SQLException e){
+			System.err.println("error getting people names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception while getting people names" + d);
+		}
+		return personData;
+	}
 	/**
 	 * 
 	 * searches character table for a name.  returns all data on names like the one passed in.
@@ -187,6 +227,103 @@ public class db_helper {
 		}
 		return characterData;
 	}
+	
+	/**
+	 * 
+	 * searches character table for a name.  returns all data on names like the one passed in.
+	 * 
+	 * @param name
+	 * @return characterData
+	 */
+	public character getCharacterDataByID(String id){
+		character characterData = new character();
+		System.out.println("querying " + id + " in characters ");
+		
+		String query = "select rid,name from characters where rid = " + id + ";";
+		
+		try {
+		
+			ResultSet people = stmt.executeQuery(query);
+
+			while(people.next()){
+				
+				characterData.setId(Integer.parseInt(id));
+				characterData.setName(people.getString("name"));
+
+			}
+		}catch(SQLException e){
+			System.err.println("error getting character names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		return characterData;
+	}
+	
+	public Vector<String> getPersonAccomplistments(String person_id){
+		Vector<String> accomp = new Vector<String>();
+		
+		//get movies and characters played by person
+		String query = "select M.release_date,M.title,C.name from movie as M, characters as C, person as P, acts_in as A where P.pid = " + person_id + " and A.pid = P.pid and M.mid = A.mid and A.rid = C.rid order by release_date";
+		
+		
+		//get movies acted in
+		try {
+			ResultSet movieroles = stmt.executeQuery(query);
+			accomp.addElement("ACTING IN");
+			while(movieroles.next()){
+				String movie = "";
+				String role = "";
+				String rd = "";
+				rd = movieroles.getString("release_date");
+				movie = movieroles.getString("title");
+				role = movieroles.getString("name");
+				
+				if(rd == null){
+					rd = "  no date   ";
+				}
+				
+				String entry = "    (" + rd + ") in " + movie + " as " + role + "."; 
+				accomp.addElement(entry);
+			}
+		}catch(SQLException e){
+			System.err.println("error getting character names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}		
+		
+		accomp.addElement(" ");
+		
+		//get movies directed 
+		try {
+			query = "select M.release_date,M.title from movie as M, is_director as A where A.pid = " + person_id + " and A.mid = M.mid order by release_date";
+			ResultSet movieroles = stmt.executeQuery(query);
+			accomp.addElement("DIRECTED");
+			while(movieroles.next()){
+				String movie = "";
+				String rd = "";
+				rd = movieroles.getString("release_date");
+				movie = movieroles.getString("title");
+				
+				
+				if(rd == null){
+					rd = "  no date   ";
+				}
+				
+				String entry = "    (" + rd + ") in " + movie; 
+				accomp.addElement(entry);
+			}
+		}catch(SQLException e){
+			System.err.println("error getting character names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}		
+		
+				
+		
+		
+		return accomp;
+	}
+		
 		
 	/**
 	 * 

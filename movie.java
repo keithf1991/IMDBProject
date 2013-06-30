@@ -92,6 +92,7 @@ public class movie {
 	}
 
 	public int getMid() {
+		//System.out.println("getting movie with id " + mid);
 		return mid;
 	}
 
