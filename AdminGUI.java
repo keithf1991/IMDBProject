@@ -34,6 +34,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
+	JFrame popup = new JFrame();
 	
 	JButton saveButton = new JButton("Save");
 	JButton deleteButton = new JButton("Delete");
@@ -41,6 +42,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	JList table = new JList();
 	db_helper db = new db_helper();
 	DefaultListModel listModel;
+	
+	Object popupData;
 	
 	Vector<Object> sideList = new Vector<Object>();
 	
@@ -77,6 +80,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		            Object p = listModel.getElementAt(index);
 		            Object z = sideList.elementAt(index);
 		            System.out.println(z.toString());
+		            popupData = z;
 		            createDialog(z);
 		            //System.out.println(p.toString());
 		            //System.out.println("Double-clicked on: " + o.toString());
@@ -137,14 +141,35 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
     
     
     public void actionPerformed(ActionEvent e) {
-    	System.out.println("action performed on" + e.getSource());
+    	//System.out.println("action performed on " + (JButton)e.getSource());
 		if (e.getSource() instanceof JButton) {
 			JButton clickedButton = (JButton)e.getSource();
-			if (clickedButton.equals("saveButton")){
-				
+			//System.out.println("clicked button was " + clickedButton.n);
+			if (clickedButton.equals(saveButton)){
+				System.out.println("lets save data for " + popupData.toString());
 			}
-			if(clickedButton.equals("deleteButton")){
+			if(clickedButton.equals(deleteButton)){
+				System.out.println("lets delete data for " + popupData.toString());
+				popup.setVisible(false);
 				
+				String data = popupData.toString();
+				String id = data.substring(0,data.length()-1);
+				char type = data.charAt(data.length() -1 );
+				
+				//Vector<Integer> idVector = new Vector<Integer>();
+				
+				//idVector.addElement(Integer.parseInt(id));
+				
+				if(type == 'm'){
+					db.deleteData("movie",id);
+				}
+				if(type == 'p'){
+					db.deleteData("person", id);
+				}if(type == 'c'){
+					db.deleteData("characters", id);
+				}if(type == 's'){
+					db.deleteData("production_companies",id);
+				}
 			}
 			if (clickedButton.equals(searchButton)) {
 				
@@ -301,58 +326,85 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		String data = z.toString();
 		String id = data.substring(0,data.length()-1);
 		char type = data.charAt(data.length() -1 );
+		popup = new JFrame();
+		popup.setVisible(true);
 		
 		System.out.println("ID: "+id);
 		
-		JFrame popup = new JFrame();
-		popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		JPanel p1 = new JPanel();
+		
 		JPanel p2 = new JPanel();
 		
-		p2.setLayout(new FlowLayout());
-		p1.setLayout(new FlowLayout());
-		//p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
+		//p2.setLayout(new FlowLayout());
+		
+		
+		SpringLayout layout = new SpringLayout();
+		
+		JLabel tmpLabel = new JLabel("tmp");
 		
 		if (type == 'm') {
-			popup.add(p1, BorderLayout.NORTH);
-			//popup.add(p2, BorderLayout.CENTER);
+			
+			popup.setLayout(new BorderLayout());
 
+			p1.setLayout(new GridLayout(12, 1));
+			p2.setLayout(new GridLayout(1,2));
 
+			//get box_office data
 			box_office tbox = db.getBoxOfficeData(id);
-			movie tmov = new movie();
-			tmov = db.getMovieDatabyID(id);
-			popup.setTitle(tmov.getTitle() );
+			//get movie data
+			movie tmov = db.getMovieDatabyID(id);
+			//set title of popup
+			popup.setTitle(tmov.getTitle());
+					
 			
-			p1.add(new JLabel("Movie ID: " + tmov.getMid() ) );
-			//popup.add(new JLabel("Title: " + tmov.getTitle() ) );
-			p1.add(new JLabel("    Genre: " + tmov.getGenre() ) );
-			p1.add(new JLabel("    Rating: " + tmov.getRating() ) );
-			p1.add(new JLabel("    Runtime: " + tmov.getRuntime() ) );
-			p1.add(new JLabel("    Production Year: " + tmov.getProduction_year() ) );
-			p1.add(new JLabel("    Release Date: " + tmov.getRelease_date() ) );
+			JTextField movieTitle = new JTextField(tmov.getTitle());
+			JTextField genre = new JTextField(tmov.getGenre());
+			JTextField rating = new JTextField(tmov.getRating());
+			JTextField runtime = new JTextField(tmov.getRuntime() );
+			JTextField productionYear = new JTextField(tmov.getProduction_year());
+			JTextField totalGross = new JTextField(tbox.getTotal_gross() );
+			JTextField openingWeekend = new JTextField(tbox.getOpening_weekend() );
+			JTextField release = new JTextField(tmov.getRelease_date());
 			
-			p1.add(new JLabel("    Opening Weekend Gross: " + tbox.getOpening_weekend() ) );
-			p1.add(new JLabel("    Total Gross: " + tbox.getTotal_gross() ) );
+			
+			
+			p1.add(new JLabel("Movie ID:"));
+			p1.add(new JLabel(""));
+			p1.add(new JLabel("Title: "));
+			p1.add(movieTitle);
+			p1.add(new JLabel("Genre:"));
+			p1.add(genre);
+			p1.add(new JLabel("Rating:"));
+			p1.add(rating);
+			p1.add(new JLabel("Runtime:") );
+			p1.add(runtime);
+			p1.add(new JLabel("Production Year:" ) );
+			p1.add(productionYear);
+			p1.add(new JLabel("Release Date: " ) );
+			p1.add(release);			
+			p1.add(new JLabel("Opening Weekend Gross: " ) );
+			p1.add(openingWeekend);
+			p1.add(new JLabel("Total Gross: " ) );
+			p1.add(totalGross);
+			p1.add(new JLabel("Plot:"));
 			
 			String plot = tmov.getPlot();
 			if(plot == null){
 				JTextArea plotLabel = new JTextArea("Plot not avaiable");
-				plotLabel.setEditable(false);
-				plotLabel.setLineWrap(true);
-				popup.add(new JScrollPane(plotLabel));
-				popup.add(plotLabel);
+								p1.add(plotLabel);
 			}else{
-				JTextArea plotLabel = new JTextArea(tmov.getPlot());
-				plotLabel.setEditable(false);
-				plotLabel.setLineWrap(true);
-				popup.add(new JScrollPane(plotLabel));
-				popup.add(plotLabel);
+				JTextField plotLabel = new JTextField(tmov.getPlot());
+				
+				p1.add(plotLabel);
 			}
 			
-			popup.add(saveButton,BorderLayout.LINE_START);
-			popup.add(deleteButton,BorderLayout.LINE_END);
-			
+			popup.add(p1, BorderLayout.CENTER);
+			p2.add(saveButton);
+			p2.add(deleteButton);
+			popup.add(p2, BorderLayout.SOUTH);
 			
 			popup.setPreferredSize(new Dimension(900, 400));
 			popup.pack();

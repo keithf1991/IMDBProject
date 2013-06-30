@@ -119,10 +119,27 @@ public class db_helper {
 				movie_data.setTitle(title);
 				
 				movie_data.setGenre(movies.getString("genre"));
-				movie_data.setRuntime(Integer.parseInt(movies.getString("runtime")));
+				String runtime = movies.getString("runtime");
+				
+				if(runtime == null){
+					movie_data.setRuntime(0);
+				}else{
+					movie_data.setRuntime(Integer.parseInt(runtime));
+				}
+					
+				
+				
 				movie_data.setRating(movies.getString("rating"));
+				
 				movie_data.setPlot(movies.getString("plot"));
-				movie_data.setProduction_year(Integer.parseInt(movies.getString("production_year")));
+				String py = movies.getString("production_year");
+				if(py == null){
+					movie_data.setProduction_year(0);
+				}else{
+					movie_data.setProduction_year(Integer.parseInt(py));
+				}
+			
+				
 				movie_data.setRelease_date(movies.getString("release_date"));
 				
 			}
@@ -455,16 +472,6 @@ public class db_helper {
 		System.out.println("Variable String: " + variablesString);
 		System.out.println("Primary Keys: " + primaryString);
 		
-		/*
-		for(int k = 0; k< foreign_keys.size()-1; k++){
-			
-			System.out.println("print variables " + foreign_keys.elementAt(k));
-			
-		}*/
-		//extract primary keys
-		//extract foreign_keys	
-		//String query = "create table " + table_name"( );";
-		
 		
 		String query = "create table " + table_name + " (" + variablesString + " primary key(" + primaryString + "));";
 		
@@ -578,26 +585,32 @@ public class db_helper {
      * @param table the table to delete from
      * @param IDs the ids to remove 
      */
-    public void deleteData(String table, Vector<Integer> IDs){
+    public void deleteData(String table, String id){
         
-        String inStr = "(";
-        
-        for( int i = 0; i < IDs.size(); i++ ){
-            if( i < IDs.size() - 1 ){
-                inStr += Integer.toString( IDs.get(i) ) + ",";
-            }
+      
+        String col = "";
+        if(table.equals("movie")){
+        	col = "mid";
+        }else if (table.equals("people")){
+        	col = "pid";
+        }else if (table.equals("characters")){
+        	col = "rid";
         }
-        inStr += ")";
+        else{
+        	col = "id";
+        }
+        
         
         try{
             
-            ResultSet rs = dbmd.getColumns(null, null, table, null);
-            String idCol = rs.getMetaData().getColumnName( 1 );
+            //ResultSet rs = dbmd.getColumns(null, null, table, null);
+            //String idCol = rs.getMetaData().getColumnName( 1 );
+            System.out.println("using column " + col);
             
-            stmt.executeQuery( "delete from " + table + " where " + idCol + " in " + inStr );
+            stmt.executeUpdate("delete from " + table + " where " + col + " = " + id + ";");
             
         }catch(SQLException e){
-			System.err.println("error adding movie\n" + e);
+			System.err.println("error deleting movie\n" + e);
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
 		}

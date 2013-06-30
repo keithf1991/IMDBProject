@@ -649,3 +649,15 @@
  1700144 | Arsenic and Old Lace
  2249919 | Rio Bravo
  2382656 | The Help
+ 1943511 | Harry Potter and the Prisoner of Azkaban
+ 1943517 | Harry Potter Parent Teacher Conference
+ 1943504 | Harry Potter and the Goblet of Fire
+ 1943508 | Harry Potter and the Order of the Phoenix
+ 1943513 | Harry Potter and the Sorcerer's Stone
+ 1943495 | Harry Potter and the Chamber of Secrets
+ 1943500 | Harry Potter and the Deathly Hallows: Part 2
+ 1943499 | Harry Potter and the Deathly Hallows: Part 1
+ 1943506 | Harry Potter and the Half-Blood Prince
+ 1895449 | Finding Nemo
+ 
+ 
