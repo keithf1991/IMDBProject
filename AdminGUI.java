@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
@@ -33,9 +34,14 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
+	
+	JButton saveButton = new JButton("Save");
+	JButton deleteButton = new JButton("Delete");
+	
 	JList table = new JList();
 	db_helper db = new db_helper();
 	DefaultListModel listModel;
+	
 	Vector<Object> sideList = new Vector<Object>();
 	
     public AdminGUI() {
@@ -44,24 +50,15 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         JTabbedPane tabbedPane = new JTabbedPane();
         ImageIcon icon = createImageIcon("images/middle.gif");
          
+        //retrieve panel
         JComponent panel1 = makeListPanel();
-
-        tabbedPane.addTab("Tab 1", icon,panel1,"Search DB");
+        tabbedPane.addTab("Retrieve/Update", icon,panel1,"Search DB");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
-        /*JComponent panel2 = makeTextPanel("Add");
-        tabbedPane.addTab("Tab 2", icon, panel2,"Add movies to database");
+        //insert panel
+        JComponent panel2 = makeSpringPanel();
+        tabbedPane.addTab("Insert", icon, panel2,"Add movies to database");
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-         
-        JComponent panel3 = makeTextPanel("Update");
-        tabbedPane.addTab("Tab 3", icon, panel3,
-                "Update DB");
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-         
-        JComponent panel4 = makeTextPanel("Panel #4 (has a preferred size of 410 x 50).");
-        panel4.setPreferredSize(new Dimension(410, 50));
-        tabbedPane.addTab("Tab 4", icon, panel4,"Delete db entries");
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);*/
          
         //Add the tabbed pane to this panel.
         add(tabbedPane);
@@ -95,6 +92,10 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		
         textField.requestFocusInWindow();
         
+        saveButton.addActionListener(this);
+        deleteButton.addActionListener(this);
+        
+        
     }
 	protected JComponent makeListPanel(){
 		JPanel panel = new JPanel(false);
@@ -103,6 +104,14 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		panel.add(searchButton,BorderLayout.LINE_START);
 		panel.add(table,BorderLayout.CENTER);
 		panel.add(new JScrollPane(table));
+		return panel;
+	}
+	
+	protected JComponent makeSpringPanel(){
+		JPanel panel = new JPanel(false);
+		panel.setLayout(new SpringLayout());
+		
+		
 		return panel;
 	}
 	
@@ -128,11 +137,15 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
     
     
     public void actionPerformed(ActionEvent e) {
-    	System.out.println("action performed");
+    	System.out.println("action performed on" + e.getSource());
 		if (e.getSource() instanceof JButton) {
 			JButton clickedButton = (JButton)e.getSource();
-			
-						
+			if (clickedButton.equals("saveButton")){
+				
+			}
+			if(clickedButton.equals("deleteButton")){
+				
+			}
 			if (clickedButton.equals(searchButton)) {
 				
 				try{
@@ -236,7 +249,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          
         //Add content to the window.
-        frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
+        frame.add(new AdminGUI(), BorderLayout.CENTER);
          
         //Display the window.
         frame.pack();
@@ -336,7 +349,11 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 				popup.add(new JScrollPane(plotLabel));
 				popup.add(plotLabel);
 			}
-
+			
+			popup.add(saveButton,BorderLayout.LINE_START);
+			popup.add(deleteButton,BorderLayout.LINE_END);
+			
+			
 			popup.setPreferredSize(new Dimension(900, 400));
 			popup.pack();
 			
