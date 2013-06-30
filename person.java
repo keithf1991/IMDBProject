@@ -43,7 +43,7 @@ public class person {
 	}
 	
 	@Override public String toString(){
-		return name;
+		return id.toString() + "p";
 	}
 	
 	

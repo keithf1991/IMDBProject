@@ -39,7 +39,7 @@ public class production_company{
 	}
 	
 	@Override public String toString(){
-		return name;
+		return id.toString()+"s";
 	}
 	
 	

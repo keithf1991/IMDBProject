@@ -116,7 +116,7 @@ public class movie {
 	}
 	
 	@Override public String toString(){
-		return title;
+		return mid.toString()+"m";
 	}
 	
 	

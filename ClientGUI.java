@@ -33,7 +33,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 	
 	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
-
+	Vector<Object> sideList = new Vector<Object>();
 	
 	//Vector<String> results = new Vector<String>();
 	db_helper db = new db_helper();
@@ -75,8 +75,25 @@ public class ClientGUI implements ActionListener,KeyListener {
 		textField.addKeyListener(this);
 		
 		
-
-	
+		MouseListener mouseListener = new MouseAdapter(){
+			public void mouseClicked(MouseEvent mouseEvent) {
+				mouseEvent.getSource();
+		        if (mouseEvent.getClickCount() == 2) {
+		          int index = table.locationToIndex(mouseEvent.getPoint());
+		          if (index >= 0) {
+		        	  System.out.println("index = " + index);
+		            Object o = table.getModel().getElementAt(index);
+		            Object p = listModel.getElementAt(index);
+		            Object z = sideList.elementAt(index);
+		            System.out.println(z.toString());
+		            createDialog(z);
+		            //System.out.println(p.toString());
+		            //System.out.println("Double-clicked on: " + o.toString());
+		          }
+		        }
+		      }
+		};
+		table.addMouseListener(mouseListener);
 		//win.pack();
 		win.setVisible(true);
 		textField.requestFocusInWindow();
@@ -101,10 +118,9 @@ public class ClientGUI implements ActionListener,KeyListener {
 					String query = textField.getText();
 					String[] tmp_array;
 					
-					if (query.equalsIgnoreCase("") || query.equalsIgnoreCase(" ")) {
-						query = "nonsenseSearchTerm";
-					}	
+					
 					listModel = new DefaultListModel<String>();
+					sideList = new Vector<Object>();
 					
 					Vector<movie> movieResults = new Vector<movie>(); 
 					movieResults = db.getMovieData(query);
@@ -121,48 +137,56 @@ public class ClientGUI implements ActionListener,KeyListener {
 					
 					//convert movie objects to just titles
 					Iterator itr = movieResults.iterator();
-					listModel.addElement("MOVIES ");
+					listModel.addElement("MOVIES");
+					sideList.addElement("MOVIES");
 					while (itr.hasNext() ) {
 						movie tempMovie = new movie();
 						tempMovie = (movie)itr.next();
 						
-						listModel.addElement(" " + tempMovie.toString());
-						
+						listModel.addElement(" " + tempMovie.getTitle());
+						sideList.addElement(tempMovie);
 						
 					}
 					listModel.addElement(" ");
+					sideList.addElement(" ");
 					listModel.addElement("PEOPLE");
+					sideList.addElement("PEOPLE");
 					itr = peopleResults.iterator();
 					while (itr.hasNext() ) {
 						person tempPerson = new person();
 						tempPerson = (person)itr.next();
 						
-						listModel.addElement(" " + tempPerson.toString());
+						listModel.addElement(" " + tempPerson.getName());
 						
-						
+						sideList.addElement(tempPerson);
 					}
 					
 					listModel.addElement(" ");
+					sideList.addElement(" ");
 					listModel.addElement("CHARACTER");
+					sideList.addElement("Element");
 					itr = charResults.iterator();
 					while (itr.hasNext() ) {
 						character tempPerson = new character();
 						tempPerson = (character)itr.next();
 						
-						listModel.addElement(" " + tempPerson.toString());
+						listModel.addElement(" " + tempPerson.getName());
+						sideList.addElement(tempPerson);
 						
 						
 					}
 					
 					listModel.addElement(" ");
+					sideList.addElement(" ");
 					listModel.addElement("COMPANIES");
+					sideList.addElement("COMPANIES");
 					itr = prodResults.iterator();
 					while (itr.hasNext() ) {
 						production_company tmpComp = new production_company();
 						tmpComp = (production_company)itr.next();
 						
-						listModel.addElement(" " + tmpComp.toString());
-
+						listModel.addElement(" " + tmpComp.getName());
+						sideList.addElement(tmpComp);
 					}
 
 					
@@ -204,7 +228,11 @@ public class ClientGUI implements ActionListener,KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER){
 			
 			System.out.println("ENTER BEING PRESSED");
-			searchButton.doClick();
+			searchButton.doClick();		
+
+			
+			//PopupPanel newDialog = new PopupPanel();
+		
 		}
 		
 		
@@ -213,21 +241,20 @@ public class ClientGUI implements ActionListener,KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			
-			System.out.println("ENTER BEING PRESSED");
-			searchButton.doClick();
-		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			
-			System.out.println("ENTER BEING PRESSED");
-			searchButton.doClick();
-		}
+
 	}
 
+	
+	public void createDialog(Object z){
+		String data = z.toString();
+		String id = data.substring(0,data.length()-2);
+		char type = data.charAt(data.length()-1);
+		
+		
+	}
 }
