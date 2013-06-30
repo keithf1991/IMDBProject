@@ -1,80 +1,74 @@
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-
-import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Iterator;
-
-
-public class AdminGUI implements ActionListener,KeyListener {
-
-	/**
-	 * @param args
-	 */
+import java.util.Vector;
+ 
+public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
-	JFrame win = new JFrame("ClientGUI");
-	JPanel displayPanel = new JPanel();
-	JPanel menuPanel = new JPanel();
-	JPanel searchPanel = new JPanel();
-	
-	JButton retButton = new JButton("Retrieve");
-	JButton crButton = new JButton("Create");
-	JButton upButton = new JButton("Update");
-	JButton delButton = new JButton("Delete");
 	
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
-	
-	DefaultListModel listModel;
-	//listModel.addElement("no query");
 	JList table = new JList();
-	
-	
-	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	
+	db_helper db = new db_helper();
+	DefaultListModel listModel;
 	Vector<Object> sideList = new Vector<Object>();
 	
-	//Vector<String> results = new Vector<String>();
-	db_helper db = new db_helper();
-	
-	public AdminGUI() {
-		
-		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.setLocation(100,100);	
-		win.setSize(600, 600);
-	
-		win.add(menuPanel, BorderLayout.NORTH);
-		win.add(searchPanel, BorderLayout.WEST);
-		win.add(displayPanel, BorderLayout.CENTER);
-	
-		menuPanel.setLayout(new GridLayout(1,4));
-		searchPanel.setLayout(new GridLayout(2,1));
-		displayPanel.setLayout(new GridLayout(1,1));
-	
-		menuPanel.add(retButton);
-		menuPanel.add(crButton);
-		menuPanel.add(upButton);
-		menuPanel.add(delButton);
-	
-		searchPanel.add(textField);
-		searchPanel.add(searchButton);	
-		//searchPanel.addKeyListener(this);
-		displayPanel.add(new JScrollPane(table));
-	
-		retButton.addActionListener(this);
-		crButton.addActionListener(this);
-		upButton.addActionListener(this);
-		delButton.addActionListener(this);
-	
-		searchButton.addActionListener(this);
-		searchButton.addKeyListener(this);
-		
-		textField.addKeyListener(this);
-		
-		
+    public AdminGUI() {
+        super(new GridLayout(1, 1));
+    	
+        JTabbedPane tabbedPane = new JTabbedPane();
+        ImageIcon icon = createImageIcon("images/middle.gif");
+         
+        JComponent panel1 = makeListPanel();
+
+        tabbedPane.addTab("Tab 1", icon,panel1,"Search DB");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+         
+        /*JComponent panel2 = makeTextPanel("Add");
+        tabbedPane.addTab("Tab 2", icon, panel2,"Add movies to database");
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+         
+        JComponent panel3 = makeTextPanel("Update");
+        tabbedPane.addTab("Tab 3", icon, panel3,
+                "Update DB");
+        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+         
+        JComponent panel4 = makeTextPanel("Panel #4 (has a preferred size of 410 x 50).");
+        panel4.setPreferredSize(new Dimension(410, 50));
+        tabbedPane.addTab("Tab 4", icon, panel4,"Delete db entries");
+        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);*/
+         
+        //Add the tabbed pane to this panel.
+        add(tabbedPane);
+         
+        //The following line enables to use scrolling tabs.
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        
 		MouseListener mouseListener = new MouseAdapter(){
 			public void mouseClicked(MouseEvent mouseEvent) {
 				mouseEvent.getSource();
@@ -93,26 +87,52 @@ public class AdminGUI implements ActionListener,KeyListener {
 		        }
 		      }
 		};
-		table.addMouseListener(mouseListener);
-		//win.pack();
-		win.setVisible(true);
-		textField.requestFocusInWindow();
 		
+		table.addMouseListener(mouseListener);
+		textField.addKeyListener(this);
+		searchButton.addActionListener(this);
+		searchButton.addKeyListener(this);
+		
+        textField.requestFocusInWindow();
+        
+    }
+	protected JComponent makeListPanel(){
+		JPanel panel = new JPanel(false);
+		panel.setLayout(new BorderLayout());
+		panel.add(textField,BorderLayout.PAGE_START);
+		panel.add(searchButton,BorderLayout.LINE_START);
+		panel.add(table,BorderLayout.CENTER);
+		panel.add(new JScrollPane(table));
+		return panel;
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-	
+    protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+    }
+     
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = TabbedPaneDemo.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+    
+    
+    public void actionPerformed(ActionEvent e) {
+    	System.out.println("action performed");
 		if (e.getSource() instanceof JButton) {
 			JButton clickedButton = (JButton)e.getSource();
 			
-			
-			
-			if (clickedButton.equals(retButton)) {
-				searchPanel.setVisible(true);
-				displayPanel.setVisible(true);
-				win.repaint();
-			}
-			
+						
 			if (clickedButton.equals(searchButton)) {
 				
 				try{
@@ -200,36 +220,43 @@ public class AdminGUI implements ActionListener,KeyListener {
 					System.err.println("ArrayIndexOutOfBoundsException thrown");
 				}
 			}
-			
-			if (clickedButton.equals(crButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-			
-			if (clickedButton.equals(upButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-			
-			if (clickedButton.equals(delButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-		
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    
+    
+    
+    /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from
+     * the event dispatch thread.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("TabbedPaneDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         
+        //Add content to the window.
+        frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
+         
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
 
-	ClientGUI client = new ClientGUI();
-	
-	}
-
+        frame.setSize(1280, 800);
+    }
+     
+    public static void main(String[] args) {
+        //Schedule a job for the event dispatch thread:
+        //creating and showing this application's GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                //Turn off metal's use of bold fonts
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        createAndShowGUI();
+            }
+        });
+    }
+    
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -256,7 +283,6 @@ public class AdminGUI implements ActionListener,KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
 	
 	public void createDialog(Object z){
 		String data = z.toString();
