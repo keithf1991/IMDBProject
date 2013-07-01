@@ -117,16 +117,15 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         super(new GridLayout(1, 1));
     	
         JTabbedPane tabbedPane = new JTabbedPane();
-        ImageIcon icon = createImageIcon("images/middle.gif");
          
         //retrieve panel
         JComponent panel1 = makeListPanel();
-        tabbedPane.addTab("Retrieve/Update", icon,panel1,"Search DB");
+        tabbedPane.addTab("Retrieve/Update", panel1);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
         //insert panel
         JComponent panel2 = makeGridPanel();
-        tabbedPane.addTab("Insert Movie", icon, panel2,"Add movies to database");
+        tabbedPane.addTab("Insert Movie", panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
          
@@ -170,6 +169,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         
         
     }
+    
+    //create the panel for R/C/U
 	protected JComponent makeListPanel(){
 		JPanel panel = new JPanel(false);
 		panel.setLayout(new BorderLayout());
@@ -180,6 +181,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		return panel;
 	}
 	
+	//create the panel for adding a movie
 	protected JComponent makeGridPanel(){
 		JPanel panel = new JPanel(false);
 		panel.setLayout(new GridLayout(30,2));
@@ -253,19 +255,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		return panel;
 	}
 
-     
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = TabbedPaneDemo.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-    
-    
+   
     public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() instanceof JButton) {
@@ -432,7 +422,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("TabbedPaneDemo");
+        JFrame frame = new JFrame("IMDB ADMINT");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          
         //Add content to the window.
@@ -464,10 +454,6 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			
 			System.out.println("ENTER BEING PRESSED");
 			searchButton.doClick();		
-
-			
-			//PopupPanel newDialog = new PopupPanel();
-		
 		}
 		
 		
