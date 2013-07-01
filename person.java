@@ -1,4 +1,9 @@
 
+/**
+ * holds person data
+ * @author paul
+ *
+ */
 public class person {
   
 	String name, gender;

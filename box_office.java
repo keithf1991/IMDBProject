@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * holds box office data.  to be imported by db_helpber
+ * @author paul
+ *
+ */
 public class box_office{
 	
 	Integer id;

@@ -30,13 +30,13 @@ public class ClientGUI implements ActionListener,KeyListener {
 	JButton searchButton = new JButton("Search");
 	JTextField textField = new JTextField("");
 	
+	//list for table
 	DefaultListModel listModel;
 	//listModel.addElement("no query");
 	JList table = new JList();
 	
 	
-	JScrollPane scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	
+	//side list of data.  terrible way of doing things 
 	Vector<Object> sideList = new Vector<Object>();
 	
 	//Vector<String> results = new Vector<String>();
@@ -44,7 +44,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 	
 	public ClientGUI() {
 		
-		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
 		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.setLocation(100,100);	

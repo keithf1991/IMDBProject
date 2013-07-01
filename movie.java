@@ -1,5 +1,6 @@
 
 /**
+ * holds movie data
  * @author prm1908
  *
  */

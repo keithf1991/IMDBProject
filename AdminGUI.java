@@ -436,7 +436,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         frame.pack();
         frame.setVisible(true);
 
-        frame.setSize(1280, 800);
+        frame.setSize(800, 600);
     }
      
     public static void main(String[] args) {
@@ -474,6 +474,11 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 
 	}
 	
+	
+	/**
+	 * creates a popup window with extra info 
+	 * @param z
+	 */
 	public void createDialog(Object z){
 		String data = z.toString();
 		String id = data.substring(0,data.length()-1);
@@ -491,6 +496,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			
 
 		System.out.println("type = " + type);
+		//if movie is type
 		if (type == 'm') {
 			
 			popup.setLayout(new BorderLayout());
@@ -554,6 +560,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			
 			popup.setVisible(true);
 			
+		//if person is type
 		} else if (type == 'p') {
 			popup.setLayout(new BorderLayout());
 
@@ -588,6 +595,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			
 			popup.setVisible(true);
 			
+		//if character type
 		} else if (type == 'c') {
 			popup.setLayout(new BorderLayout());
 

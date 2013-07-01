@@ -334,8 +334,58 @@ public class db_helper {
 			System.err.println("error getting character names\n" + e);
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
-		}		
+		}
 
+		//get movies written 
+		try {
+			query = "select M.release_date,M.title from movie as M, is_writer as A where A.pid = " + person_id + " and A.mid = M.mid order by release_date";
+			ResultSet movieroles = stmt.executeQuery(query);
+			accomp.addElement("WRITER");
+			while(movieroles.next()){
+				String movie = "";
+				String rd = "";
+				rd = movieroles.getString("release_date");
+				movie = movieroles.getString("title");
+				
+				
+				if(rd == null){
+					rd = "  no date   ";
+				}
+				
+				String entry = "    (" + rd + ") in " + movie; 
+				accomp.addElement(entry);
+			}
+		}catch(SQLException e){
+			System.err.println("error getting character names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+
+		//get movies produced 
+		try {
+			query = "select M.release_date,M.title from movie as M, is_producer as A where A.pid = " + person_id + " and A.mid = M.mid order by release_date";
+			ResultSet movieroles = stmt.executeQuery(query);
+			accomp.addElement("PRODUCED");
+			while(movieroles.next()){
+				String movie = "";
+				String rd = "";
+				rd = movieroles.getString("release_date");
+				movie = movieroles.getString("title");
+				
+				
+				if(rd == null){
+					rd = "  no date   ";
+				}
+				
+				String entry = "    (" + rd + ") in " + movie; 
+				accomp.addElement(entry);
+			}
+		}catch(SQLException e){
+			System.err.println("error getting character names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		
 		return accomp;
 	}
 		

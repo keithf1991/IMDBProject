@@ -1,3 +1,9 @@
+
+/**
+ * holds production company data
+ * @author paul
+ *
+ */
 public class production_company{
 	
 	Integer id;
