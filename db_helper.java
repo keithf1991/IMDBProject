@@ -391,6 +391,45 @@ public class db_helper {
 		
 		
 	/**
+	 * get movies produced by a company
+	 * @param comp_id
+	 * @return
+	 */
+	public Vector<String> getMoviesProduced(String comp_id){
+		Vector<String> accomp = new Vector<String>();
+		String query;
+		try {
+			query = "select M.release_date,M.title from movie as M, produced as A where A.company_id = " + comp_id +"  and A.mid = M.mid order by release_date;";
+			ResultSet movieroles = stmt.executeQuery(query);
+			accomp.addElement("MOVIES PRODUCED");
+			while(movieroles.next()){
+				String movie = "";
+				String rd = "";
+				rd = movieroles.getString("release_date");
+				movie = movieroles.getString("title");
+				
+				
+				if(rd == null){
+					rd = "  no date   ";
+				}
+				
+				String entry = "    (" + rd + ") " + movie; 
+				accomp.addElement(entry);
+			}
+		}catch(SQLException e){
+			System.err.println("error getting movies produced by a company names\n" + e);
+		}catch(NullPointerException d){
+			System.err.println("null pointer exception" + d);
+		}
+		return accomp;
+	}
+	
+	
+	
+	
+	
+	
+	/**
 	 * returns box office data for a specific movie
 	 * @param movie_id
 	 * @return 

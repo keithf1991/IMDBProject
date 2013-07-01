@@ -368,6 +368,13 @@ public class ClientGUI implements ActionListener,KeyListener {
 
 			popup.setTitle(tmpChar.getName() );
 			popup.add(new JLabel("Location: " + tmpChar.getLocation()));
+			Vector<String> accomp = db.getMoviesProduced(id);
+			
+			JList plotLabel = new JList(accomp);
+			
+
+			popup.add(plotLabel);
+			popup.add(new JScrollPane(plotLabel));
 			
 			popup.setPreferredSize(new Dimension(900, 400));
 			popup.pack();
