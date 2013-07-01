@@ -12,7 +12,7 @@ public class db_helper {
 	Statement stmt;
 	DatabaseMetaData dbmd;
 	/*
-	 * db_helper constructor
+	 * db_helper does all the connection automatically.
 	 */
 	public db_helper(){
 	    //connecting to red dwarf
@@ -151,7 +151,7 @@ public class db_helper {
 		
 		return movie_data;
 	}
-	/*
+	/**
 	 * get people names when given a string query
 	 * @return movie_names
 	 */
@@ -276,6 +276,7 @@ public class db_helper {
 		return characterData;
 	}
 	
+	//gets movies a person was in/directed/wrote/produced
 	public Vector<String> getPersonAccomplistments(String person_id){
 		Vector<String> accomp = new Vector<String>();
 		
@@ -334,16 +335,13 @@ public class db_helper {
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
 		}		
-		
-				
-		
-		
+
 		return accomp;
 	}
 		
 		
 	/**
-	 * 
+	 * returns box office data for a specific movie
 	 * @param movie_id
 	 * @return 
 	 */

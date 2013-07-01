@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.util.Vector;
 import java.util.Iterator;
 
-
+/**
+ * This class controls the client program.  it interfaces with db_helper for all calls to the database.  
+ * @author paul
+ *
+ */
 public class ClientGUI implements ActionListener,KeyListener {
 
 	/**
@@ -55,9 +59,9 @@ public class ClientGUI implements ActionListener,KeyListener {
 		displayPanel.setLayout(new GridLayout(1,1));
 	
 		menuPanel.add(retButton);
-		menuPanel.add(crButton);
-		menuPanel.add(upButton);
-		menuPanel.add(delButton);
+		//menuPanel.add(crButton);
+		//menuPanel.add(upButton);
+		//menuPanel.add(delButton);
 	
 		searchPanel.add(textField);
 		searchPanel.add(searchButton);	
@@ -74,7 +78,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 		
 		textField.addKeyListener(this);
 		
-		
+		//adding mouse listener for double clicks
 		MouseListener mouseListener = new MouseAdapter(){
 			public void mouseClicked(MouseEvent mouseEvent) {
 				mouseEvent.getSource();
@@ -93,6 +97,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 		        }
 		      }
 		};
+		
 		table.addMouseListener(mouseListener);
 		//win.pack();
 		win.setVisible(true);
@@ -100,6 +105,10 @@ public class ClientGUI implements ActionListener,KeyListener {
 		
 	}
 	
+	
+	/**
+	 * constrols actions on buttons
+	 */
 	public void actionPerformed(ActionEvent e) {
 	
 		if (e.getSource() instanceof JButton) {
@@ -107,12 +116,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 			
 			
 			
-			if (clickedButton.equals(retButton)) {
-				searchPanel.setVisible(true);
-				displayPanel.setVisible(true);
-				win.repaint();
-			}
-			
+			//if search is hit
 			if (clickedButton.equals(searchButton)) {
 				
 				try{
@@ -124,6 +128,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 					listModel = new DefaultListModel<String>();
 					sideList = new Vector<Object>();
 					
+					//querying various databases
 					Vector<movie> movieResults = new Vector<movie>(); 
 					movieResults = db.getMovieData(query);
 				
@@ -139,6 +144,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 					
 					//convert movie objects to just titles
 					Iterator itr = movieResults.iterator();
+					//puts everything into a list
 					listModel.addElement("MOVIES");
 					sideList.addElement("MOVIES");
 					while (itr.hasNext() ) {
@@ -200,25 +206,6 @@ public class ClientGUI implements ActionListener,KeyListener {
 					System.err.println("ArrayIndexOutOfBoundsException thrown");
 				}
 			}
-			
-			if (clickedButton.equals(crButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-			
-			if (clickedButton.equals(upButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-			
-			if (clickedButton.equals(delButton)) {
-				searchPanel.setVisible(false);
-				displayPanel.setVisible(false);
-				win.repaint();
-			}
-		
 		}
 	}
 	
@@ -230,6 +217,9 @@ public class ClientGUI implements ActionListener,KeyListener {
 	
 	}
 
+	/**
+	 * controlling button presses
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -258,6 +248,10 @@ public class ClientGUI implements ActionListener,KeyListener {
 	}
 
 	
+	/**
+	 * creates a dialog that shows more information on an object
+	 * @param z
+	 */
 	public void createDialog(Object z){
 		String data = z.toString();
 		String id = data.substring(0,data.length()-1);
@@ -266,7 +260,7 @@ public class ClientGUI implements ActionListener,KeyListener {
 		System.out.println("ID: "+id);
 		
 		JFrame popup = new JFrame();
-		popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//popup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		JPanel p1 = new JPanel();
 		JPanel p2 = new JPanel();
@@ -293,8 +287,8 @@ public class ClientGUI implements ActionListener,KeyListener {
 			p1.add(new JLabel("    Production Year: " + tmov.getProduction_year() ) );
 			p1.add(new JLabel("    Release Date: " + tmov.getRelease_date() ) );
 			
-			p1.add(new JLabel("    Opening Weekend Gross: " + tbox.getOpening_weekend() ) );
-			p1.add(new JLabel("    Total Gross: " + tbox.getTotal_gross() ) );
+			p1.add(new JLabel("    Opening Weekend Gross: $" + tbox.getOpening_weekend() ) );
+			p1.add(new JLabel("    Total Gross: $" + tbox.getTotal_gross() ) );
 			
 			String plot = tmov.getPlot();
 			if(plot == null){

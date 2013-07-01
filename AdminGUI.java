@@ -29,7 +29,12 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.Vector;
- 
+
+/**
+ * this class is the admin program.  it has all CRUD functions and uses db_helper for calls to the database. 
+ * @author paul
+ *
+ */
 public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
 	
@@ -113,6 +118,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
 	JButton addMovie = new JButton("Add Movie");
 	
+	//admin gui constructor
     public AdminGUI() {
         super(new GridLayout(1, 1));
     	
@@ -120,7 +126,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
          
         //retrieve panel
         JComponent panel1 = makeListPanel();
-        tabbedPane.addTab("Retrieve/Update", panel1);
+        tabbedPane.addTab("Retrieve/Update/Delete", panel1);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
         //insert panel
@@ -241,9 +247,6 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		panel.add(new JLabel("Opening Weekend Gross: "));
 		panel.add(openingWeekendGrossField);
 		
-		//inputDate
-//		panel.add(new JLabel("Release Day: "));
-//		panel.add(inputDate);
 		
 		//production
 		panel.add(new JLabel("Production Company Name: "));
@@ -255,7 +258,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		return panel;
 	}
 
-   
+   //action listeners
     public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() instanceof JButton) {
@@ -263,6 +266,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			//adding info to database one huge chunk at a time
 			if (clickedButton.equals(addMovie)){
 				//i hope this works
+				//puts every into Vectors of strings
 				Vector<String[]> actors = new Vector<String[]>();
 				actors.add(new String[]{actorName.getText(), actorGender.getText(),actorRole.getText()});
 				
@@ -422,7 +426,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("IMDB ADMINT");
+        JFrame frame = new JFrame("IMDB ADMIN");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          
         //Add content to the window.
