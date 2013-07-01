@@ -195,7 +195,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		panel.add(new JLabel("Runtime: "));
 		panel.add(inputRuntime);
 		
-		panel.add(new JLabel("Rating: "));
+		panel.add(new JLabel("Rating:  (G/PG/PG-13/R/NC-17)"));
 		panel.add(inputRating);
 		
 		panel.add(new JLabel("Production Year: "));
@@ -300,7 +300,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 				int year = Integer.parseInt(inputRelease.getText().substring(0, 3));
 				int month = Integer.parseInt(inputRelease.getText().substring(5, 6));
 				int day = Integer.parseInt(inputRelease.getText().substring(8,9));
-				Date opening_day = new Date(month,day,year);
+				Date opening_day = new Date(year,month,day);
 				
 				//adds movie to DB
 				db.addMovie(inputName, actors, directors, producers, writers, totalGross, opening_weekend_gross, (java.sql.Date) opening_day, pc, genre, rating, plot, runtime, production_year);
