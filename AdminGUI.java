@@ -26,6 +26,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.Vector;
  
@@ -70,6 +71,48 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	JTextField loc;
 	
 	
+	
+	//Swing components for adding movies
+	JTextField actorName = new JTextField();
+	JTextField actorGender = new JTextField();
+	JTextField actorRole = new JTextField();
+	
+	//director
+	JTextField directorName = new JTextField();
+	JTextField directorGender = new JTextField();
+	
+	//producer
+	JTextField producerName = new JTextField();
+	JTextField producerGender = new JTextField();
+	
+	//writers
+	JTextField writerName = new JTextField();
+	JTextField writerGender = new JTextField();
+	
+	//gross
+	JTextField totalGrossField = new JTextField();
+	JTextField openingWeekendGrossField = new JTextField();
+	
+	//inputDate
+	JTextField inputDate = new JTextField();
+	
+	//production
+	JTextField inputProdCompName = new JTextField();
+	JTextField inputProdCompLoc = new JTextField();
+	
+	//movieData
+	JTextField inputTitle = new JTextField("TITLE");
+	JTextField inputGenre = new JTextField("GENRE");
+	JTextField inputRuntime = new JTextField("RUNTIME");
+	JTextField inputRating = new JTextField("RATING");
+	JTextField inputProductionYear = new JTextField("PRODUCTION YEAR");
+	JTextField inputTotalGross = new JTextField("TOTAL GROSS");
+	JTextField inputOpeningWeekend = new JTextField("OPENING WEEKEND");
+	JTextField inputRelease = new JTextField("RELEASE DATE");
+	JTextField inputPlot = new JTextField("PLOT");
+	
+	JButton addMovie = new JButton("Add Movie");
+	
     public AdminGUI() {
         super(new GridLayout(1, 1));
     	
@@ -82,9 +125,10 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
          
         //insert panel
-        JComponent panel2 = makeSpringPanel();
-        tabbedPane.addTab("Insert", icon, panel2,"Add movies to database");
+        JComponent panel2 = makeGridPanel();
+        tabbedPane.addTab("Insert Movie", icon, panel2,"Add movies to database");
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+        
          
         //Add the tabbed pane to this panel.
         add(tabbedPane);
@@ -122,6 +166,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
         saveButton.addActionListener(this);
         deleteButton.addActionListener(this);
         
+        addMovie.addActionListener(this);
+        
         
     }
 	protected JComponent makeListPanel(){
@@ -134,22 +180,79 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		return panel;
 	}
 	
-	protected JComponent makeSpringPanel(){
+	protected JComponent makeGridPanel(){
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new SpringLayout());
+		panel.setLayout(new GridLayout(30,2));
 		
 		
+		//movieData
+		panel.add(new JLabel("Title: "));
+		panel.add(inputTitle);
+		
+		panel.add(new JLabel("Genre: "));
+		panel.add(inputGenre);
+		
+		panel.add(new JLabel("Runtime: "));
+		panel.add(inputRuntime);
+		
+		panel.add(new JLabel("Rating: "));
+		panel.add(inputRating);
+		
+		panel.add(new JLabel("Production Year: "));
+		panel.add(inputProductionYear);
+				
+		panel.add(new JLabel("Release Date: (YYYY-MM-DD) : "));
+		panel.add(inputRelease);
+		
+		panel.add(new JLabel("Plot: "));
+		panel.add(inputPlot);
+		
+		//actor
+		panel.add(new JLabel("Actor Name: "));
+		panel.add(actorName);
+		panel.add(new JLabel("Actor Gender: "));
+		panel.add(actorGender);
+		panel.add(new JLabel("Actor Role: "));
+		panel.add(actorRole);
+		
+		//director
+		panel.add(new JLabel("Director Name: "));
+		panel.add(directorName);
+		panel.add(new JLabel("Director Gender: "));
+		panel.add(directorGender);
+		
+		//producer
+		panel.add(new JLabel("Producer Name: "));
+		panel.add(producerName);
+		panel.add(new JLabel("Producer Gender: "));
+		panel.add(producerGender);
+		
+		//writers
+		panel.add(new JLabel("Writer Name: "));
+		panel.add(writerName);
+		panel.add(new JLabel("Writer Gender: "));
+		panel.add(writerGender);
+		
+		//gross
+		panel.add(new JLabel("Total Gross: "));
+		panel.add(totalGrossField);
+		panel.add(new JLabel("Opening Weekend Gross: "));
+		panel.add(openingWeekendGrossField);
+		
+		//inputDate
+//		panel.add(new JLabel("Release Day: "));
+//		panel.add(inputDate);
+		
+		//production
+		panel.add(new JLabel("Production Company Name: "));
+		panel.add(inputProdCompName);
+		panel.add(new JLabel("Produnction Company Location: "));
+		panel.add(inputProdCompLoc);
+		
+		panel.add(addMovie);
 		return panel;
 	}
-	
-    protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
-        return panel;
-    }
+
      
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
@@ -164,15 +267,51 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
     
     
     public void actionPerformed(ActionEvent e) {
-    	//System.out.println("action performed on " + (JButton)e.getSource());
+
 		if (e.getSource() instanceof JButton) {
 			JButton clickedButton = (JButton)e.getSource();
-			//System.out.println("clicked button was " + clickedButton.n);
+			//adding info to database one huge chunk at a time
+			if (clickedButton.equals(addMovie)){
+				//i hope this works
+				Vector<String[]> actors = new Vector<String[]>();
+				actors.add(new String[]{actorName.getText(), actorGender.getText(),actorRole.getText()});
+				
+				Vector<String[]> directors = new Vector<String[]>();
+				directors.add(new String[]{directorName.getText(),directorGender.getText()});
+				
+				Vector<String[]> producers = new Vector<String[]>();
+				producers.add(new String[]{producerName.getText(),producerGender.getText()});
+				
+				Vector<String[]> writers = new Vector <String[]>();
+				writers.add(new String[]{writerName.getText(),writerGender.getText()});
+				
+				Vector<String[]> pc = new Vector<String[]>();
+				pc.add(new String[]{inputProdCompName.getText(),inputProdCompLoc.getText()});
+				
+				String totalGross = inputTotalGross.getText();
+				String opening_weekend_gross = inputOpeningWeekend.getText();
+				
+				String genre = inputGenre.getText();
+				String inputName = inputTitle.getText();
+				String rating = inputRating.getText();
+				String plot = inputPlot.getText();
+				int runtime = Integer.parseInt(inputRuntime.getText());
+				int production_year = Integer.parseInt(inputProductionYear.getText());
+				int year = Integer.parseInt(inputRelease.getText().substring(0, 3));
+				int month = Integer.parseInt(inputRelease.getText().substring(5, 6));
+				int day = Integer.parseInt(inputRelease.getText().substring(8,9));
+				Date opening_day = new Date(month,day,year);
+				
+				//adds movie to DB
+				db.addMovie(inputName, actors, directors, producers, writers, totalGross, opening_weekend_gross, (java.sql.Date) opening_day, pc, genre, rating, plot, runtime, production_year);
+				
+				
+				
+				
+			}
 			if (clickedButton.equals(saveButton)){
 				System.out.println("lets save data for " + popupData.toString());
 				saveData();
-				
-				
 			}
 			if(clickedButton.equals(deleteButton)){
 				System.out.println("lets delete data for " + popupData.toString());

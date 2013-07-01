@@ -362,7 +362,23 @@ public class ClientGUI implements ActionListener,KeyListener {
 			
 			popup.setVisible(true);
 		} else if (type == 's') {
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+			production_company tmpChar = new production_company();
+			tmpChar = db.getProductionCompaniesbyID(id);
+			p1.add(new JLabel("Company ID: " + tmpChar.getId()));
+			popup.add(p1, BorderLayout.NORTH);
+			popup.add(p2, BorderLayout.CENTER);
+
+
+			popup.setTitle(tmpChar.getName() );
+			popup.add(new JLabel("Location: " + tmpChar.getLocation()));
 			
+			popup.setPreferredSize(new Dimension(900, 400));
+			popup.pack();
+			
+			popup.setVisible(true);
 		}
 		
 		popup.setVisible(true);
