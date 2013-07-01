@@ -695,35 +695,20 @@ public class db_helper {
      * @param vals the values to set the columns to
      * @param IDs the IDs to update for the given table
      */
-    public void updateData(String table, Vector<String> cols, Vector<String> vals, Vector<Integer> IDs){
-        String updateStr = "";
-        for( int i = 0; i < cols.size(); i++ ){
-            
-            updateStr += cols.get(i) + "=" + vals.get(i);
-            
-            if( i < cols.size() - 1 ){
-                updateStr += cols.get(i) + ",";
-            }
-        }
-        
-        String inStr = "(";
-        
-        for( int i = 0; i < IDs.size(); i++ ){
-            if( i < IDs.size() - 1 ){
-                inStr += Integer.toString( IDs.get(i) ) + ",";
-            }
-        }
-        inStr += ")";
-
+    public void updateData(String table, String id_type, String colName, String value, String id, int intSelect){
+ 
+    	String query;
         try{
-
-            ResultSet rs = dbmd.getColumns(null, null, table, null);
-            String idCol = rs.getMetaData().getColumnName( 1 );
-
-            stmt.executeQuery( "update " + table + " set " + updateStr + " where " + inStr );
+        	if(intSelect==1){
+        		 query = "update " + table + " set " + colName + " = " + value + " where " + id_type + " = " + id ;
+        	}else{
+        		 query = "update " + table + " set " + colName + " = '" + value + "' where " + id_type + " = " + id ;
+        	}
+            System.out.println("running update: " + query );
+            stmt.executeUpdate(query);
             
         }catch(SQLException e){
-			System.err.println("error adding movie\n" + e);
+			System.err.println("error updating movie\n" + e);
 		}catch(NullPointerException d){
 			System.err.println("null pointer exception" + d);
 		}

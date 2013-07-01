@@ -47,6 +47,29 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 	
 	Vector<Object> sideList = new Vector<Object>();
 	
+	//text fields for movie
+	JTextField movieTitle;
+	JTextField genre;
+	JTextField runtime;
+	JTextField rating;
+	JTextField productionYear;
+	JTextField totalGross;
+	JTextField openingWeekend;
+	JTextField release;
+	JTextField plotLabel;
+	
+	//text fields for person
+	JTextField name;
+	JTextField gender;
+	
+	//for characters
+	JTextField charName = new JTextField(" ");
+	
+	//text fields for company
+	JTextField compName;
+	JTextField loc;
+	
+	
     public AdminGUI() {
         super(new GridLayout(1, 1));
     	
@@ -147,6 +170,9 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			//System.out.println("clicked button was " + clickedButton.n);
 			if (clickedButton.equals(saveButton)){
 				System.out.println("lets save data for " + popupData.toString());
+				saveData();
+				
+				
 			}
 			if(clickedButton.equals(deleteButton)){
 				System.out.println("lets delete data for " + popupData.toString());
@@ -156,10 +182,7 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 				String id = data.substring(0,data.length()-1);
 				char type = data.charAt(data.length() -1 );
 				
-				//Vector<Integer> idVector = new Vector<Integer>();
-				
-				//idVector.addElement(Integer.parseInt(id));
-				
+			
 				if(type == 'm'){
 					db.deleteData("movie",id);
 				}
@@ -337,10 +360,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		JPanel p1 = new JPanel();
 		JPanel p2 = new JPanel();
 			
-		SpringLayout layout = new SpringLayout();
-		
-		JLabel tmpLabel = new JLabel("tmp");
-		
+
+		System.out.println("type = " + type);
 		if (type == 'm') {
 			
 			popup.setLayout(new BorderLayout());
@@ -355,16 +376,16 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			//set title of popup
 			popup.setTitle(tmov.getTitle());
 			
-			JTextField movieTitle = new JTextField(tmov.getTitle());
-			JTextField genre = new JTextField(tmov.getGenre());
-			JTextField rating = new JTextField(tmov.getRating());
-			JTextField runtime = new JTextField(tmov.getRuntime() );
-			JTextField productionYear = new JTextField(tmov.getProduction_year());
-			JTextField totalGross = new JTextField(tbox.getTotal_gross() );
-			JTextField openingWeekend = new JTextField(tbox.getOpening_weekend() );
-			JTextField release = new JTextField(tmov.getRelease_date());
+			movieTitle = new JTextField(tmov.getTitle());
+			genre = new JTextField(tmov.getGenre());
+			rating = new JTextField(tmov.getRating());
+			runtime = new JTextField(new Integer(tmov.getRuntime()).toString() );
+			productionYear = new JTextField(new Integer(tmov.getProduction_year()).toString());
+			totalGross = new JTextField(tbox.getTotal_gross() );
+			openingWeekend = new JTextField(tbox.getOpening_weekend() );
+			release = new JTextField(tmov.getRelease_date());
 			
-			p1.add(new JLabel("Movie ID:"));
+			p1.add(new JLabel("Movie ID:" + tmov.getMid()));
 			p1.add(new JLabel(""));
 			p1.add(new JLabel("Title: "));
 			p1.add(movieTitle);
@@ -376,20 +397,20 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			p1.add(runtime);
 			p1.add(new JLabel("Production Year:" ) );
 			p1.add(productionYear);
-			p1.add(new JLabel("Release Date: " ) );
+			p1.add(new JLabel("Release Date: (YYYY-MM-DD) " ) );
 			p1.add(release);			
-			p1.add(new JLabel("Opening Weekend Gross: " ) );
+			p1.add(new JLabel("Opening Weekend Gross($): " ) );
 			p1.add(openingWeekend);
-			p1.add(new JLabel("Total Gross: " ) );
+			p1.add(new JLabel("Total Gross($): " ) );
 			p1.add(totalGross);
 			p1.add(new JLabel("Plot:"));
 			
 			String plot = tmov.getPlot();
 			if(plot == null){
-				JTextArea plotLabel = new JTextArea("Plot not avaiable");
+				plotLabel = new JTextField("Plot not avaiable");
 								p1.add(plotLabel);
 			}else{
-				JTextField plotLabel = new JTextField(tmov.getPlot());
+				plotLabel = new JTextField(tmov.getPlot());
 				
 				p1.add(plotLabel);
 			}
@@ -416,8 +437,8 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			tmpPerson = db.getPeopleDataByID(id);
 			
 			
-			JTextField name = new JTextField(tmpPerson.getName());
-			JTextField gender = new JTextField(tmpPerson.getGender());
+			name = new JTextField(tmpPerson.getName());
+			gender = new JTextField(tmpPerson.getGender());
 			
 			popup.setTitle(tmpPerson.getName() );
 			
@@ -450,15 +471,16 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			tmpPerson = db.getCharacterDataByID(id);
 			
 			
-			JTextField name = new JTextField(tmpPerson.getName());
+			charName = new JTextField(tmpPerson.getName());
 			
+			System.out.println("set charName to " + charName.getText());
 			
 			popup.setTitle(tmpPerson.getName() );
 			
 			p1.add(new JLabel("Character ID: " + tmpPerson.getId()));
 			p1.add(new JLabel(""));
 			p1.add(new JLabel("Name: "));
-			p1.add(name);
+			p1.add(charName);
 			popup.add(p1, BorderLayout.CENTER);
 			
 			p2.add(saveButton);
@@ -481,15 +503,15 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 			tmpComp = db.getProductionCompaniesbyID(id);
 			
 			
-			JTextField name = new JTextField(tmpComp.getName());
-			JTextField loc = new JTextField(tmpComp.getLocation());
+			compName = new JTextField(tmpComp.getName());
+			loc = new JTextField(tmpComp.getLocation());
 			
 			popup.setTitle(tmpComp.getName() );
 			
 			p1.add(new JLabel("Company ID: " + tmpComp.getId()));
 			p1.add(new JLabel(""));
 			p1.add(new JLabel("Name: "));
-			p1.add(name);
+			p1.add(compName);
 			p1.add(new JLabel("Location: "));
 			p1.add(loc);
 			popup.add(p1, BorderLayout.CENTER);
@@ -507,5 +529,55 @@ public class AdminGUI extends JPanel implements ActionListener,KeyListener {
 		popup.setVisible(true);
 		popup.pack();
 		
+	}
+	
+	public void saveData(){
+		String data = popupData.toString();
+		String id = data.substring(0,data.length()-1);
+		char type = data.charAt(data.length() -1 );
+		
+		
+		//updating movie
+		if(type == 'm'){
+			//update title
+			db.updateData("movie", "mid", "title", movieTitle.getText(), id,0);
+			//update genre
+			db.updateData("movie", "mid", "genre", genre.getText(), id,0);
+			
+			if(!(runtime.getText() == "")){
+				//update runtime
+				db.updateData("movie", "mid", "runtime", runtime.getText(), id,1);
+			}
+			
+			
+			//update rating
+			db.updateData("movie", "mid", "rating", rating.getText(), id,0);
+			//update plot
+			db.updateData("movie", "mid", "plot", plotLabel.getText(), id,0);
+			//update production_year
+			if(!(productionYear.getText() == "")){
+				db.updateData("movie", "mid", "production_year", productionYear.getText(), id,1);
+			}
+			//update release_date
+			db.updateData("movie", "mid", "release_date", release.getText(), id,0);
+		}
+		if(type == 'p'){
+			//update name
+			db.updateData("person", "pid", "name", name.getText(), id,0);
+			//update gender
+			db.updateData("person", "pid", "gender", gender.getText(), id,0);
+			
+		}
+		if(type == 'c'){
+			
+			db.updateData("characters", "rid", "name", charName.getText(), id,0);
+		}
+		if(type == 's'){
+			//update name
+			db.updateData("production_companies", "id", "name", compName.getText(), id,0);
+			//update location
+			db.updateData("production_companies", "id", "location", loc.getText(), id,0);
+		}
+		popup.setVisible(false);
 	}
 }

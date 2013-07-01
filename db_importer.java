@@ -648,9 +648,6 @@ public class db_importer {
 					}catch(SQLException e){
 						System.out.println("error inserting into produced for " + movie_id + " and " + company_name);
 					}
-					
-					
-					
 				}
 				
 			}catch(SQLException e){
